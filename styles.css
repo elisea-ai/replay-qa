@@ -1,28 +1,28 @@
-/* Палитра и типографика проекта. Новых цветов не заводим — берём отсюда. */
+/* Project palette and type. Do not invent new colours; take them from here. */
 :root{
-  --bg:        #FAFAF7;   /* фон страницы */
-  --surface:   #EFEFE8;   /* подложка полосы времени */
-  --track:     #DCDCD4;   /* непроигранный блок */
-  --ink:       #101010;   /* текст и проигранный блок */
-  --muted:     #8C8C84;   /* второстепенный текст */
-  --rule:      #E2E2DA;   /* разделители */
+  --bg:        #FAFAF7;   /* page background */
+  --surface:   #EFEFE8;   /* timeline backing */
+  --track:     #DCDCD4;   /* unplayed block */
+  --ink:       #101010;   /* text and played block */
+  --muted:     #8C8C84;   /* secondary text */
+  --rule:      #E2E2DA;   /* rules */
 
-  --accent:    #C6EF4E;   /* текущий блок, активное состояние */
-  --think:     #8FB4E8;   /* размышления */
-  --ok:        #5E8F1E;   /* успешный запуск, правка файла */
-  --fail:      #C4442A;   /* ненулевой код возврата */
+  --accent:    #C6EF4E;   /* current block, active state */
+  --think:     #8FB4E8;   /* thinking */
+  --ok:        #5E8F1E;   /* successful run, file edit */
+  --fail:      #C4442A;   /* non-zero exit code */
 
   --font:      "Inter","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:      "SF Mono",Menlo,ui-monospace,monospace;
 
-  --r:         14px;      /* скругление */
+  --r:         14px;      /* corner radius */
   --gap:       24px;
 }
 
 html,body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0}
 *{box-sizing:border-box}
 
-/* Полоса времени — главный объект на экране, не мельчить. */
+/* The timeline is the main object on screen. Keep it large. */
 .timeline{background:var(--surface);border-radius:var(--r);padding:28px 24px}
 .timeline .bar{display:flex;gap:5px;height:124px;align-items:stretch}
 .timeline .blk{border-radius:4px;background:var(--track);transition:background .12s}
@@ -31,13 +31,13 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0
 .timeline .blk.think{background:var(--think)}
 .timeline .head{position:absolute;top:14px;bottom:40px;width:6px;background:var(--ink);border-radius:3px}
 
-/* Счётчики — крупные цифры, без рамок и карточек. */
+/* Counters: large numerals, no cards or borders. */
 .stats{display:flex;gap:60px;margin-top:34px}
 .stats u{display:block;text-decoration:none;font-family:var(--mono);
   font-size:20px;letter-spacing:.14em;color:var(--muted)}
 .stats b{display:block;font-size:46px;font-weight:700;margin-top:4px}
 
-/* Расшифровка — второй план: мелко и приглушённо. */
+/* Transcript is secondary: small and muted. */
 .log{margin-top:30px;border-top:1px solid var(--rule);padding-top:22px;
   font-family:var(--mono);font-size:21px;line-height:2.1;color:#54544E}
 .log .tag{display:inline-block;width:9em}

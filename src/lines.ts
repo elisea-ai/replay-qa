@@ -1,6 +1,6 @@
-// Чтение NDJSON построчно. Разбор событий сюда не входит.
+// Reading NDJSON line by line. Event parsing does not belong here.
 
-/** Режет содержимое файла на непустые строки, обрезая пробелы по краям. */
+/** Splits file contents into non-empty lines, trimming whitespace. */
 export function splitLines(raw: string): string[] {
   return raw
     .split("\n")
@@ -8,7 +8,7 @@ export function splitLines(raw: string): string[] {
     .filter((l) => l.length > 0);
 }
 
-/** Пробует разобрать строку. Возвращает null вместо исключения. */
+/** Tries to parse a line. Returns null instead of throwing. */
 export function tryParse(line: string): Record<string, unknown> | null {
   try {
     const v: unknown = JSON.parse(line);

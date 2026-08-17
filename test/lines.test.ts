@@ -2,25 +2,25 @@ import { describe, it, expect } from "vitest";
 import { splitLines, tryParse } from "../src/lines.js";
 
 describe("splitLines", () => {
-  it("выбрасывает пустые строки", () => {
+  it("drops empty lines", () => {
     expect(splitLines('{"a":1}\n\n{"b":2}\n')).toEqual(['{"a":1}', '{"b":2}']);
   });
 
-  it("обрезает пробелы по краям", () => {
+  it("trims surrounding whitespace", () => {
     expect(splitLines('  {"a":1}  ')).toEqual(['{"a":1}']);
   });
 });
 
 describe("tryParse", () => {
-  it("разбирает объект", () => {
+  it("parses an object", () => {
     expect(tryParse('{"t":0,"type":"prompt"}')).toEqual({ t: 0, type: "prompt" });
   });
 
-  it("возвращает null на обрезанной строке", () => {
+  it("returns null on a truncated line", () => {
     expect(tryParse('{"id":"ev_003c","ts":118.4,"kind":"read_f')).toBeNull();
   });
 
-  it("возвращает null на не-объекте", () => {
+  it("returns null on a non-object", () => {
     expect(tryParse("42")).toBeNull();
   });
 });

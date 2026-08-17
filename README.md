@@ -1,10 +1,10 @@
 # session-replay
 
-Инструменты для чтения трейсов агентских сессий.
+Tools for reading agent session traces.
 
-`logs/` — записи сессий в NDJSON, по событию на строку. Файлы писались разными
-версиями агента, поэтому схемы внутри одного файла отличаются, а часть строк
-битая. Подробности в [AGENTS.md](AGENTS.md).
+`logs/` holds session recordings in NDJSON, one event per line. The files were
+written by different agent versions, so schemas differ inside a single file and
+some lines are malformed. See [AGENTS.md](AGENTS.md) for details.
 
 ```
 npm install
