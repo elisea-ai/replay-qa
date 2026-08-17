@@ -1,0 +1,816 @@
+{"id":"ev_0001","t":0,"type":"session_start","agent":"codex","repo":"AtomicBot-ai/session-replay","schema":2}
+{"id":"ev_0002","t":400,"type":"prompt","text":"fix the flaky checkout test — it fails about 1 in 5 runs on CI"}
+{"id":"ev_0003","ts":7.65,"kind":"step_start","step":1}
+{"id":"ev_0004","ts":8.15,"kind":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_0005","ts":8.46,"kind":"delta","text":"the helper"}
+{"id":"ev_0006","ts":8.66,"kind":"delta","text":"resolves before"}
+{"id":"ev_0007","ts":8.89,"kind":"delta","text":"the microtask"}
+{"id":"ev_0008","ts":9.25,"kind":"delta","text":"queue drains,"}
+{"id":"ev_0009","ts":9.38,"kind":"delta","text":"the helper"}
+{"id":"ev_000a","ts":9.63,"kind":"delta","text":"resolves before"}
+{"id":"ev_000b","ts":9.96,"kind":"delta","text":"the microtask"}
+{"id":"ev_000c","ts":10.22,"kind":"delta","text":"queue drains,"}
+{"id":"ev_000d","ts":10.41,"kind":"delta","text":"the assertion"}
+{"id":"ev_000e","ts":10.65,"kind":"delta","text":"races a debounced"}
+{"id":"ev_000f","ts":10.97,"kind":"delta","text":"write"}
+{"id":"ev_000g","ts":11.47,"kind":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_000h","ts":11.74,"kind":"delta","text":"the assertion"}
+{"id":"ev_000i","ts":12.01,"kind":"delta","text":"races a debounced"}
+{"id":"ev_000j","ts":12.13,"kind":"delta","text":"write, the"}
+{"id":"ev_000k","ts":12.43,"kind":"delta","text":"spec asserts"}
+{"id":"ev_000l","ts":12.55,"kind":"delta","text":"on a stale"}
+{"id":"ev_000m","ts":12.91,"kind":"delta","text":"render, the"}
+{"id":"ev_000n","ts":13.24,"kind":"delta","text":"assertion races"}
+{"id":"ev_000o","ts":13.59,"kind":"delta","text":"a debounced"}
+{"id":"ev_000p","ts":13.71,"kind":"delta","text":"write"}
+{"id":"ev_000q","ts":14.21,"kind":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_000r","ts":14.4,"kind":"delta","text":"confirm against"}
+{"id":"ev_000s","ts":14.62,"kind":"delta","text":"the CI history"}
+{"id":"ev_000t","ts":14.83,"kind":"delta","text":"before touching"}
+{"id":"ev_000u","ts":15.13,"kind":"delta","text":"the source,"}
+{"id":"ev_000v","ts":15.36,"kind":"delta","text":"rolling back"}
+{"id":"ev_000w","ts":15.7,"kind":"delta","text":"the last edit,"}
+{"id":"ev_000x","ts":15.82,"kind":"delta","text":"it hid the"}
+{"id":"ev_000y","ts":16.15,"kind":"delta","text":"real cause,"}
+{"id":"ev_000z","ts":16.37,"kind":"delta","text":"confirm against"}
+{"id":"ev_0010","ts":16.66,"kind":"delta","text":"the CI history"}
+{"id":"ev_0011","ts":16.89,"kind":"delta","text":"before touching"}
+{"id":"ev_0012","ts":17.09,"kind":"delta","text":"the source"}
+{"id":"ev_0013","ts":17.59,"kind":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_0014","ts":17.83,"kind":"delta","text":"this only fails"}
+{"id":"ev_0015","ts":18.14,"kind":"delta","text":"when the runner"}
+{"id":"ev_0016","ts":18.51,"kind":"delta","text":"is under load,"}
+{"id":"ev_0017","ts":18.64,"kind":"delta","text":"rolling back"}
+{"id":"ev_0018","ts":18.9,"kind":"delta","text":"the last edit,"}
+{"id":"ev_0019","ts":19.2,"kind":"delta","text":"it hid the"}
+{"id":"ev_001a","ts":19.42,"kind":"delta","text":"real cause,"}
+{"id":"ev_001b","ts":19.71,"kind":"delta","text":"confirm against"}
+{"id":"ev_001c","ts":20.02,"kind":"delta","text":"the CI history"}
+{"id":"ev_001d","ts":20.17,"kind":"delta","text":"before touching"}
+{"id":"ev_001e","ts":20.47,"kind":"delta","text":"the source"}
+{"id":"ev_001f","ts":23.54,"kind":"read_file","path":"tests/helpers/render.ts","lines":281,"tokens":8091,"cost":0.01537}
+{"id":"ev_001g","ts":24.23,"kind":"run","cmd":"npm run typecheck"}
+{"id":"ev_001h","ts":41.08,"kind":"run_result","cmd":"npm run typecheck","exit":0,"tokens":9164,"cost":0.01741}
+{"id":"ev_001i","ts":42.71,"kind":"step_end","step":1}
+{"id":"ev_001j","ts":46.72,"kind":"step_start","step":2}
+{"id":"ev_001k","ts":47.22,"kind":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_001l","ts":47.43,"kind":"delta","text":"the assertion"}
+{"id":"ev_001m","ts":47.78,"kind":"delta","text":"races a debounced"}
+{"id":"ev_001n","ts":48.05,"kind":"delta","text":"write, confirm"}
+{"id":"ev_001o","ts":48.35,"kind":"delta","text":"against the"}
+{"id":"ev_001p","ts":48.5,"kind":"delta","text":"CI history"}
+{"id":"ev_001q","ts":48.85,"kind":"delta","text":"before touching"}
+{"id":"ev_001r","ts":48.97,"kind":"delta","text":"the source,"}
+{"id":"ev_001s","ts":49.25,"kind":"delta","text":"the assertion"}
+{"id":"ev_001t","ts":49.38,"kind":"delta","text":"races a debounced"}
+{"id":"ev_001u","ts":49.7,"kind":"delta","text":"write"}
+{"id":"ev_001v","ts":52.67,"kind":"edit","path":"src/lib/clock.ts","added":20,"removed":3,"tokens":14291,"cost":0.02715}
+{"id":"ev_001w","ts":53.37,"kind":"run","cmd":"npm test"}
+{"id":"ev_001x","ts":64.51,"kind":"run_result","cmd":"npm test","exit":0,"tokens":15232,"cost":0.02894}
+{"id":"ev_001y","ts":66.81,"kind":"edit","path":"src/checkout/session.ts","added":20,"removed":5,"tokens":17721,"cost":0.03367}
+{"id":"ev_001z","ts":68.6,"kind":"step_end","step":2}
+{"id":"ev_0020","ts":77.79,"kind":"step_start","step":3}
+{"id":"ev_0021","ts":78.49,"kind":"run","cmd":"npm run lint"}
+{"id":"ev_0022","ts":106.36,"kind":"run_result","cmd":"npm run lint","exit":0,"tokens":18848,"cost":0.03581}
+{"id":"ev_0023","ts":106.86,"kind":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_0024","ts":107.14,"kind":"delta","text":"a fake timer"}
+{"id":"ev_0025","ts":107.48,"kind":"delta","text":"is cleaner"}
+{"id":"ev_0026","ts":107.6,"kind":"delta","text":"than a sleep"}
+{"id":"ev_0027","ts":107.76,"kind":"delta","text":"here, rolling"}
+{"id":"ev_0028","ts":107.97,"kind":"delta","text":"back the last"}
+{"id":"ev_0029","ts":108.3,"kind":"delta","text":"edit, it hid"}
+{"id":"ev_002a","ts":108.58,"kind":"delta","text":"the real cause,"}
+{"id":"ev_002b","ts":108.83,"kind":"delta","text":"a fake timer"}
+{"id":"ev_002c","ts":108.95,"kind":"delta","text":"is cleaner"}
+{"id":"ev_002d","ts":109.24,"kind":"delta","text":"than a sleep"}
+{"id":"ev_002e","ts":109.5,"kind":"delta","text":"here"}
+{"id":"ev_002f","ts":110.43,"kind":"read_file","path":"src/checkout/session.ts","lines":84,"tokens":22791,"cost":0.0433}
+{"id":"ev_002g","ts":111.75,"kind":"read_file","path":"tests/checkout.spec.ts","lines":187,"tokens":24802,"cost":0.04712}
+{"id":"ev_002h","ts":115,"kind":"edit","path":"src/checkout/session.ts","added":14,"removed":1,"tokens":27870,"cost":0.05295}
+{"id":"ev_002i","ts":119.11,"kind":"edit","path":"src/checkout/totals.ts","added":17,"removed":0,"tokens":29338,"cost":0.05574}
+{"id":"ev_002j","ts":119.61,"kind":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_002k","ts":119.83,"kind":"delta","text":"the assertion"}
+{"id":"ev_002l","ts":120.14,"kind":"delta","text":"races a debounced"}
+{"id":"ev_002m","ts":120.33,"kind":"delta","text":"write, the"}
+{"id":"ev_002n","ts":120.48,"kind":"delta","text":"assertion races"}
+{"id":"ev_002o","ts":120.63,"kind":"delta","text":"a debounced"}
+{"id":"ev_002p","ts":120.91,"kind":"delta","text":"write, the"}
+{"id":"ev_002q","ts":121.22,"kind":"delta","text":"assertion races"}
+{"id":"ev_002r","ts":121.36,"kind":"delta","text":"a debounced"}
+{"id":"ev_002s","ts":121.55,"kind":"delta","text":"write"}
+{"id":"ev_002t","ts":123.62,"kind":"step_end","step":3}
+{"id":"ev_002u","ts":130.91,"kind":"step_start","step":4}
+{"id":"ev_002v","ts":133.13,"kind":"read_file","path":"src/checkout/debounce.ts","lines":148,"tokens":33433,"cost":0.06352}
+{"id":"ev_002w","ts":133.83,"kind":"run","cmd":"npm run typecheck"}
+{"id":"ev_002x","ts":148.34,"kind":"run_result","cmd":"npm run typecheck","exit":1,"tokens":34607,"cost":0.06575}
+{"id":"ev_002y","ts":148.84,"kind":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_002z","ts":149.04,"kind":"delta","text":"the assertion"}
+{"id":"ev_0030","ts":149.41,"kind":"delta","text":"races a debounced"}
+{"id":"ev_0031","ts":149.6,"kind":"delta","text":"write, rolling"}
+{"id":"ev_0032","ts":149.93,"kind":"delta","text":"back the last"}
+{"id":"ev_0033","ts":150.13,"kind":"delta","text":"edit, it hid"}
+{"id":"ev_0034","ts":150.3,"kind":"delta","text":"the real cause,"}
+{"id":"ev_0035","ts":150.52,"kind":"delta","text":"the spec asserts"}
+{"id":"ev_0036","ts":150.88,"kind":"delta","text":"on a stale"}
+{"id":"ev_0037","ts":151.15,"kind":"delta","text":"render"}
+{"id":"ev_0038","ts":152.4,"kind":"read_file","path":"vitest.config.ts","lines":331,"tokens":37172,"cost":0.07063}
+{"id":"ev_0039","ts":153.41,"kind":"step_end","step":4}
+{"id":"ev_003a","ts":159.51,"kind":"step_start","step":5}
+{"id":"ev_003b","ts":160.01,"kind":"thinking","text":"the spec asserts on a stale render"}
+{"id":"ev_003c","ts":160.29,"kind":"delta","text":"the helper"}
+{"id":"ev_003d","ts":160.66,"kind":"delta","text":"resolves before"}
+{"id":"ev_003e","ts":161.04,"kind":"delta","text":"the microtask"}
+{"id":"ev_003f","ts":161.25,"kind":"delta","text":"queue drains,"}
+{"id":"ev_003g","ts":161.59,"kind":"delta","text":"confirm against"}
+{"id":"ev_003h","ts":161.79,"kind":"delta","text":"the CI history"}
+{"id":"ev_003i","ts":161.99,"kind":"delta","text":"before touching"}
+{"id":"ev_003j","ts":162.28,"kind":"delta","text":"the source,"}
+{"id":"ev_003k","ts":162.49,"kind":"delta","text":"the spec asserts"}
+{"id":"ev_003l","ts":162.79,"kind":"delta","text":"on a stale"}
+{"id":"ev_003m","ts":162.94,"kind":"delta","text":"render"}
+{"id":"ev_003n","ts":167.25,"kind":"edit","path":"src/checkout/session.ts","added":7,"removed":2,"tokens":41820,"cost":0.07946}
+{"id":"ev_003o","ts":167.75,"kind":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_003p","ts":167.96,"kind":"delta","text":"the helper"}
+{"id":"ev_003q","ts":168.32,"kind":"delta","text":"resolves before"}
+{"id":"ev_003r","ts":168.46,"kind":"delta","text":"the microtask"}
+{"id":"ev_003s","ts":168.76,"kind":"delta","text":"queue drains,"}
+{"id":"ev_003t","ts":169.09,"kind":"delta","text":"the assertion"}
+{"id":"ev_003u","ts":169.41,"kind":"delta","text":"races a debounced"}
+{"id":"ev_003v","ts":169.76,"kind":"delta","text":"write, the"}
+{"id":"ev_003w","ts":169.93,"kind":"delta","text":"helper resolves"}
+{"id":"ev_003x","ts":170.16,"kind":"delta","text":"before the"}
+{"id":"ev_003y","ts":170.38,"kind":"delta","text":"microtask queue"}
+{"id":"ev_003z","ts":170.52,"kind":"delta","text":"drains"}
+{"id":"ev_0040","ts":173.55,"kind":"edit","path":"package.json","added":4,"removed":1,"tokens":47737,"cost":0.0907}
+{"id":"ev_0041","ts":174.58,"kind":"step_end","step":5}
+{"id":"ev_0042","ts":183.87,"kind":"step_start","step":6}
+{"id":"ev_0043","ts":186.5,"kind":"read_file","path":"tests/helpers/render.ts","lines":378,"tokens":48190,"cost":0.09156}
+{"id":"ev_0044","ts":187,"kind":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_0045","ts":187.18,"kind":"delta","text":"the assertion"}
+{"id":"ev_0046","ts":187.31,"kind":"delta","text":"races a debounced"}
+{"id":"ev_0047","ts":187.44,"kind":"delta","text":"write, this"}
+{"id":"ev_0048","ts":187.69,"kind":"delta","text":"only fails"}
+{"id":"ev_0049","ts":188.03,"kind":"delta","text":"when the runner"}
+{"id":"ev_004a","ts":188.38,"kind":"delta","text":"is under load,"}
+{"id":"ev_004b","ts":188.65,"kind":"delta","text":"the helper"}
+{"id":"ev_004c","ts":188.92,"kind":"delta","text":"resolves before"}
+{"id":"ev_004d","ts":189.17,"kind":"delta","text":"the microtask"}
+{"id":"ev_004e","ts":189.54,"kind":"delta","text":"queue drains"}
+{"id":"ev_004f","ts":193.94,"kind":"edit","path":"src/checkout/totals.ts","added":18,"removed":5,"tokens":52817,"cost":0.10035}
+{"id":"ev_004g","ts":194.64,"kind":"run","cmd":"npm run typecheck"}
+{"id":"ev_004h","ts":214.15,"kind":"run_result","cmd":"npm run typecheck","exit":0,"tokens":53441,"cost":0.10154}
+{"id":"ev_004i","ts":214.84,"kind":"run","cmd":"npm test"}
+{"id":"ev_004j","ts":235.24,"kind":"run_result","cmd":"npm test","exit":1,"tokens":54084,"cost":0.10276}
+{"id":"ev_004k","ts":235.74,"kind":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_004l","ts":236.06,"kind":"delta","text":"the helper"}
+{"id":"ev_004m","ts":236.35,"kind":"delta","text":"resolves before"}
+{"id":"ev_004n","ts":236.63,"kind":"delta","text":"the microtask"}
+{"id":"ev_004o","ts":236.96,"kind":"delta","text":"queue drains,"}
+{"id":"ev_004p","ts":237.2,"kind":"delta","text":"confirm against"}
+{"id":"ev_004q","ts":237.47,"kind":"delta","text":"the CI history"}
+{"id":"ev_004r","ts":237.62,"kind":"delta","text":"before touching"}
+{"id":"ev_004s","ts":237.82,"kind":"delta","text":"the source,"}
+{"id":"ev_004t","ts":238.06,"kind":"delta","text":"rolling back"}
+{"id":"ev_004u","ts":238.18,"kind":"delta","text":"the last edit,"}
+{"id":"ev_004v","ts":238.39,"kind":"delta","text":"it hid the"}
+{"id":"ev_004w","ts":238.59,"kind":"delta","text":"real cause"}
+{"id":"ev_004x","ts":239.09,"kind":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_004y","ts":239.38,"kind":"delta","text":"the helper"}
+{"id":"ev_004z","ts":239.6,"kind":"delta","text":"resolves before"}
+{"id":"ev_0050","ts":239.86,"kind":"delta","text":"the microtask"}
+{"id":"ev_0051","ts":240.12,"kind":"delta","text":"queue drains,"}
+{"id":"ev_0052","ts":240.29,"kind":"delta","text":"a fake timer"}
+{"id":"ev_0053","ts":240.43,"kind":"delta","text":"is cleaner"}
+{"id":"ev_0054","ts":240.6,"kind":"delta","text":"than a sleep"}
+{"id":"ev_0055","ts":240.82,"kind":"delta","text":"here, confirm"}
+{"id":"ev_0056","ts":241.16,"kind":"delta","text":"against the"}
+{"id":"ev_0057","ts":241.42,"kind":"delta","text":"CI history"}
+{"id":"ev_0058","ts":241.59,"kind":"delta","text":"before touching"}
+{"id":"ev_0059","ts":241.77,"kind":"delta","text":"the source"}
+{"id":"ev_005a","ts":243.76,"kind":"step_end","step":6}
+{"id":"ev_003c","ts":118.4,"kind":"read_file","path":"src/che
+{"id":"ev_005b","ts":251.79,"kind":"step_start","step":7}
+{"id":"ev_005c","ts":252.5,"kind":"run","cmd":"npm test -- checkout"}
+{"id":"ev_005d","ts":264.6,"kind":"run_result","cmd":"npm test -- checkout","exit":0,"tokens":57876,"cost":0.10996}
+{"id":"ev_005e","ts":266.55,"kind":"edit","path":"package.json","added":21,"removed":0,"tokens":60252,"cost":0.11448}
+{"id":"ev_005f","ts":268.48,"kind":"edit","path":"src/checkout/totals.ts","added":11,"removed":3,"tokens":63679,"cost":0.12099}
+{"id":"ev_005g","ts":270.39,"kind":"read_file","path":"tests/checkout.spec.ts","lines":272,"tokens":64285,"cost":0.12214}
+{"id":"ev_005h","ts":270.89,"kind":"thinking","text":"the spec asserts on a stale render"}
+{"id":"ev_005i","ts":271.15,"kind":"delta","text":"confirm against"}
+{"id":"ev_005j","ts":271.46,"kind":"delta","text":"the CI history"}
+{"id":"ev_005k","ts":271.67,"kind":"delta","text":"before touching"}
+{"id":"ev_005l","ts":271.92,"kind":"delta","text":"the source,"}
+{"id":"ev_005m","ts":272.22,"kind":"delta","text":"the helper"}
+{"id":"ev_005n","ts":272.47,"kind":"delta","text":"resolves before"}
+{"id":"ev_005o","ts":272.75,"kind":"delta","text":"the microtask"}
+{"id":"ev_005p","ts":273,"kind":"delta","text":"queue drains,"}
+{"id":"ev_005q","ts":273.26,"kind":"delta","text":"confirm against"}
+{"id":"ev_005r","ts":273.41,"kind":"delta","text":"the CI history"}
+{"id":"ev_005s","ts":273.71,"kind":"delta","text":"before touching"}
+{"id":"ev_005t","ts":274.05,"kind":"delta","text":"the source"}
+{"id":"ev_005u","ts":274.55,"kind":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_005v","ts":274.79,"kind":"delta","text":"the helper"}
+{"id":"ev_005w","ts":275.04,"kind":"delta","text":"resolves before"}
+{"id":"ev_005x","ts":275.42,"kind":"delta","text":"the microtask"}
+{"id":"ev_005y","ts":275.73,"kind":"delta","text":"queue drains,"}
+{"id":"ev_005z","ts":275.89,"kind":"delta","text":"rolling back"}
+{"id":"ev_0060","ts":276.02,"kind":"delta","text":"the last edit,"}
+{"id":"ev_0061","ts":276.34,"kind":"delta","text":"it hid the"}
+{"id":"ev_0062","ts":276.52,"kind":"delta","text":"real cause,"}
+{"id":"ev_0063","ts":276.7,"kind":"delta","text":"a fake timer"}
+{"id":"ev_0064","ts":276.92,"kind":"delta","text":"is cleaner"}
+{"id":"ev_0065","ts":277.19,"kind":"delta","text":"than a sleep"}
+{"id":"ev_0066","ts":277.56,"kind":"delta","text":"here"}
+{"id":"ev_0067","ts":279.37,"kind":"step_end","step":7}
+{"id":"ev_0068","ts":286.03,"kind":"step_start","step":8}
+{"id":"ev_0069","ts":286.53,"kind":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_006a","ts":286.76,"kind":"delta","text":"rolling back"}
+{"id":"ev_006b","ts":287.05,"kind":"delta","text":"the last edit,"}
+{"id":"ev_006c","ts":287.18,"kind":"delta","text":"it hid the"}
+{"id":"ev_006d","ts":287.34,"kind":"delta","text":"real cause,"}
+{"id":"ev_006e","ts":287.67,"kind":"delta","text":"the spec asserts"}
+{"id":"ev_006f","ts":287.8,"kind":"delta","text":"on a stale"}
+{"id":"ev_006g","ts":287.97,"kind":"delta","text":"render, this"}
+{"id":"ev_006h","ts":288.12,"kind":"delta","text":"only fails"}
+{"id":"ev_006i","ts":288.44,"kind":"delta","text":"when the runner"}
+{"id":"ev_006j","ts":288.69,"kind":"delta","text":"is under load"}
+{"id":"ev_006k","ts":289.19,"kind":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_006l","ts":289.45,"kind":"delta","text":"the helper"}
+{"id":"ev_006m","ts":289.62,"kind":"delta","text":"resolves before"}
+{"id":"ev_006n","ts":289.89,"kind":"delta","text":"the microtask"}
+{"id":"ev_006o","ts":290.26,"kind":"delta","text":"queue drains,"}
+{"id":"ev_006p","ts":290.56,"kind":"delta","text":"the spec asserts"}
+{"id":"ev_006q","ts":290.9,"kind":"delta","text":"on a stale"}
+{"id":"ev_006r","ts":291.07,"kind":"delta","text":"render, confirm"}
+{"id":"ev_006s","ts":291.21,"kind":"delta","text":"against the"}
+{"id":"ev_006t","ts":291.34,"kind":"delta","text":"CI history"}
+{"id":"ev_006u","ts":291.59,"kind":"delta","text":"before touching"}
+{"id":"ev_006v","ts":291.88,"kind":"delta","text":"the source"}
+{"id":"ev_006w","ts":292.38,"kind":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_006x","ts":292.66,"kind":"delta","text":"a fake timer"}
+{"id":"ev_006y","ts":292.96,"kind":"delta","text":"is cleaner"}
+{"id":"ev_006z","ts":293.11,"kind":"delta","text":"than a sleep"}
+{"id":"ev_0070","ts":293.26,"kind":"delta","text":"here, the helper"}
+{"id":"ev_0071","ts":293.51,"kind":"delta","text":"resolves before"}
+{"id":"ev_0072","ts":293.68,"kind":"delta","text":"the microtask"}
+{"id":"ev_0073","ts":293.87,"kind":"delta","text":"queue drains,"}
+{"id":"ev_0074","ts":294.03,"kind":"delta","text":"the helper"}
+{"id":"ev_0075","ts":294.26,"kind":"delta","text":"resolves before"}
+{"id":"ev_0076","ts":294.5,"kind":"delta","text":"the microtask"}
+{"id":"ev_0077","ts":294.79,"kind":"delta","text":"queue drains"}
+{"id":"ev_0078","ts":296.5,"kind":"edit","path":"src/checkout/cart.ts","added":13,"removed":4,"tokens":76056,"cost":0.14451}
+{"id":"ev_0079","ts":298.31,"kind":"step_end","step":8}
+{"id":"ev_007a","t":306977,"type":"step_start","step":9}
+{"id":"ev_007b","t":307477,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_007c","t":307774,"type":"delta","text":"a fake timer"}
+{"id":"ev_007d","t":308121,"type":"delta","text":"is cleaner"}
+{"id":"ev_007e","t":308432,"type":"delta","text":"than a sleep"}
+{"id":"ev_007f","t":308731,"type":"delta","text":"here, this"}
+{"id":"ev_007g","t":308857,"type":"delta","text":"only fails"}
+{"id":"ev_007h","t":309097,"type":"delta","text":"when the runner"}
+{"id":"ev_007i","t":309328,"type":"delta","text":"is under load,"}
+{"id":"ev_007j","t":309622,"type":"delta","text":"the helper"}
+{"id":"ev_007k","t":309915,"type":"delta","text":"resolves before"}
+{"id":"ev_007l","t":310124,"type":"delta","text":"the microtask"}
+{"id":"ev_007m","t":310361,"type":"delta","text":"queue drains"}
+{"id":"ev_007n","t":310861,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_007o","t":311086,"type":"delta","text":"confirm against"}
+{"id":"ev_007p","t":311269,"type":"delta","text":"the CI history"}
+{"id":"ev_007q","t":311506,"type":"delta","text":"before touching"}
+{"id":"ev_007r","t":311771,"type":"delta","text":"the source,"}
+{"id":"ev_007s","t":311971,"type":"delta","text":"rolling back"}
+{"id":"ev_007t","t":312289,"type":"delta","text":"the last edit,"}
+{"id":"ev_007u","t":312661,"type":"delta","text":"it hid the"}
+{"id":"ev_007v","t":312787,"type":"delta","text":"real cause,"}
+{"id":"ev_007w","t":313029,"type":"delta","text":"confirm against"}
+{"id":"ev_007x","t":313283,"type":"delta","text":"the CI history"}
+{"id":"ev_007y","t":313557,"type":"delta","text":"before touching"}
+{"id":"ev_007z","t":313678,"type":"delta","text":"the source"}
+{"id":"ev_0080","t":315647,"type":"edit","path":"src/checkout/session.ts","added":24,"removed":4,"tokens":82572,"cost":0.15689}
+{"id":"ev_0081","t":316147,"type":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_0082","t":316317,"type":"delta","text":"the helper"}
+{"id":"ev_0083","t":316551,"type":"delta","text":"resolves before"}
+{"id":"ev_0084","t":316823,"type":"delta","text":"the microtask"}
+{"id":"ev_0085","t":317093,"type":"delta","text":"queue drains,"}
+{"id":"ev_0086","t":317327,"type":"delta","text":"rolling back"}
+{"id":"ev_0087","t":317470,"type":"delta","text":"the last edit,"}
+{"id":"ev_0088","t":317835,"type":"delta","text":"it hid the"}
+{"id":"ev_0089","t":318002,"type":"delta","text":"real cause,"}
+{"id":"ev_008a","t":318290,"type":"delta","text":"a fake timer"}
+{"id":"ev_008b","t":318588,"type":"delta","text":"is cleaner"}
+{"id":"ev_008c","t":318892,"type":"delta","text":"than a sleep"}
+{"id":"ev_008d","t":319247,"type":"delta","text":"here"}
+{"id":"ev_008e","t":319747,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_008f","t":319896,"type":"delta","text":"the spec asserts"}
+{"id":"ev_008g","t":320168,"type":"delta","text":"on a stale"}
+{"id":"ev_008h","t":320479,"type":"delta","text":"render, the"}
+{"id":"ev_008i","t":320616,"type":"delta","text":"spec asserts"}
+{"id":"ev_008j","t":320739,"type":"delta","text":"on a stale"}
+{"id":"ev_008k","t":320884,"type":"delta","text":"render, the"}
+{"id":"ev_008l","t":321041,"type":"delta","text":"spec asserts"}
+{"id":"ev_008m","t":321186,"type":"delta","text":"on a stale"}
+{"id":"ev_008n","t":321421,"type":"delta","text":"render"}
+{"id":"ev_008o","t":321921,"type":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_008p","t":322208,"type":"delta","text":"the assertion"}
+{"id":"ev_008q","t":322476,"type":"delta","text":"races a debounced"}
+{"id":"ev_008r","t":322832,"type":"delta","text":"write, this"}
+{"id":"ev_008s","t":323060,"type":"delta","text":"only fails"}
+{"id":"ev_008t","t":323422,"type":"delta","text":"when the runner"}
+{"id":"ev_008u","t":323793,"type":"delta","text":"is under load,"}
+{"id":"ev_008v","t":324057,"type":"delta","text":"confirm against"}
+{"id":"ev_008w","t":324422,"type":"delta","text":"the CI history"}
+{"id":"ev_008x","t":324776,"type":"delta","text":"before touching"}
+{"id":"ev_008y","t":324898,"type":"delta","text":"the source"}
+{"id":"ev_008z","t":327326,"type":"read_file","path":"vitest.config.ts","lines":230,"tokens":89656,"cost":0.17035}
+{"id":"ev_0090","t":329334,"type":"step_end","step":9}
+{"id":"ev_0091","t":339054,"type":"step_start","step":10}
+{"id":"ev_0092","t":341231,"type":"edit","path":"src/checkout/totals.ts","added":24,"removed":2,"tokens":90694,"cost":0.17232}
+{"id":"ev_0093","t":342534,"type":"read_file","path":"src/checkout/session.ts","lines":154,"tokens":92840,"cost":0.1764}
+{"id":"ev_0094","t":343034,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_0095","t":343402,"type":"delta","text":"confirm against"}
+{"id":"ev_0096","t":343578,"type":"delta","text":"the CI history"}
+{"id":"ev_0097","t":343947,"type":"delta","text":"before touching"}
+{"id":"ev_0098","t":344108,"type":"delta","text":"the source,"}
+{"id":"ev_0099","t":344475,"type":"delta","text":"a fake timer"}
+{"id":"ev_009a","t":344841,"type":"delta","text":"is cleaner"}
+{"id":"ev_009b","t":345195,"type":"delta","text":"than a sleep"}
+{"id":"ev_009c","t":345346,"type":"delta","text":"here, confirm"}
+{"id":"ev_009d","t":345565,"type":"delta","text":"against the"}
+{"id":"ev_009e","t":345864,"type":"delta","text":"CI history"}
+{"id":"ev_009f","t":346043,"type":"delta","text":"before touching"}
+{"id":"ev_009g","t":346299,"type":"delta","text":"the source"}
+{"id":"ev_009h","t":346799,"type":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_009i","t":347022,"type":"delta","text":"rolling back"}
+{"id":"ev_009j","t":347204,"type":"delta","text":"the last edit,"}
+{"id":"ev_009k","t":347414,"type":"delta","text":"it hid the"}
+{"id":"ev_009l","t":347706,"type":"delta","text":"real cause,"}
+{"id":"ev_009m","t":347848,"type":"delta","text":"the helper"}
+{"id":"ev_009n","t":348077,"type":"delta","text":"resolves before"}
+{"id":"ev_009o","t":348218,"type":"delta","text":"the microtask"}
+{"id":"ev_009p","t":348513,"type":"delta","text":"queue drains,"}
+{"id":"ev_009q","t":348670,"type":"delta","text":"a fake timer"}
+{"id":"ev_009r","t":348799,"type":"delta","text":"is cleaner"}
+{"id":"ev_009s","t":349113,"type":"delta","text":"than a sleep"}
+{"id":"ev_009t","t":349262,"type":"delta","text":"here"}
+{"id":"ev_009u","t":351515,"type":"edit","path":"vitest.config.ts","added":11,"removed":6,"tokens":97877,"cost":0.18597}
+{"id":"ev_009v","t":352859,"type":"step_end","step":10}
+{"id":"ev_009w","t":357216,"type":"step_start","step":11}
+{"id":"ev_009x","t":357716,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_009y","t":358008,"type":"delta","text":"confirm against"}
+{"id":"ev_009z","t":358332,"type":"delta","text":"the CI history"}
+{"id":"ev_00a0","t":358689,"type":"delta","text":"before touching"}
+{"id":"ev_00a1","t":358892,"type":"delta","text":"the source,"}
+{"id":"ev_00a2","t":359194,"type":"delta","text":"rolling back"}
+{"id":"ev_00a3","t":359525,"type":"delta","text":"the last edit,"}
+{"id":"ev_00a4","t":359871,"type":"delta","text":"it hid the"}
+{"id":"ev_00a5","t":360103,"type":"delta","text":"real cause,"}
+{"id":"ev_00a6","t":360465,"type":"delta","text":"the assertion"}
+{"id":"ev_00a7","t":360716,"type":"delta","text":"races a debounced"}
+{"id":"ev_00a8","t":361018,"type":"delta","text":"write"}
+{"id":"ev_00a9","t":361518,"type":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_00aa","t":361674,"type":"delta","text":"confirm against"}
+{"id":"ev_00ab","t":361901,"type":"delta","text":"the CI history"}
+{"id":"ev_00ac","t":362045,"type":"delta","text":"before touching"}
+{"id":"ev_00ad","t":362349,"type":"delta","text":"the source,"}
+{"id":"ev_00ae","t":362482,"type":"delta","text":"a fake timer"}
+{"id":"ev_00af","t":362652,"type":"delta","text":"is cleaner"}
+{"id":"ev_00ag","t":362984,"type":"delta","text":"than a sleep"}
+{"id":"ev_00ah","t":363349,"type":"delta","text":"here, the helper"}
+{"id":"ev_00ai","t":363681,"type":"delta","text":"resolves before"}
+{"id":"ev_00aj","t":363816,"type":"delta","text":"the microtask"}
+{"id":"ev_00ak","t":363990,"type":"delta","text":"queue drains"}
+{"id":"ev_00al","t":364490,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_00am","t":364864,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00an","t":365146,"type":"delta","text":"on a stale"}
+{"id":"ev_00ao","t":365273,"type":"delta","text":"render, the"}
+{"id":"ev_00ap","t":365607,"type":"delta","text":"spec asserts"}
+{"id":"ev_00aq","t":365878,"type":"delta","text":"on a stale"}
+{"id":"ev_00ar","t":366061,"type":"delta","text":"render, rolling"}
+{"id":"ev_00as","t":366198,"type":"delta","text":"back the last"}
+{"id":"ev_00at","t":366523,"type":"delta","text":"edit, it hid"}
+{"id":"ev_00au","t":366669,"type":"delta","text":"the real cause"}
+{"id":"ev_00av","t":367369,"type":"run","cmd":"npm run lint"}
+{"id":"ev_00aw","t":390160,"type":"run_result","cmd":"npm run lint","exit":0,"tokens":103265,"cost":0.1962}
+{"id":"ev_00ax","t":390660,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00ay","t":390804,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00az","t":391150,"type":"delta","text":"on a stale"}
+{"id":"ev_00b0","t":391419,"type":"delta","text":"render, the"}
+{"id":"ev_00b1","t":391544,"type":"delta","text":"spec asserts"}
+{"id":"ev_00b2","t":391675,"type":"delta","text":"on a stale"}
+{"id":"ev_00b3","t":391822,"type":"delta","text":"render, the"}
+{"id":"ev_00b4","t":392028,"type":"delta","text":"assertion races"}
+{"id":"ev_00b5","t":392274,"type":"delta","text":"a debounced"}
+{"id":"ev_00b6","t":392453,"type":"delta","text":"write"}
+{"id":"ev_00b7","t":394490,"type":"step_end","step":11}
+{"id":"ev_00b5","t":392274,"type":"delta","text":"a debounced"}
+{"id":"ev_00b8","t":399289,"type":"step_start","step":12}
+{"id":"ev_00b9","t":400955,"type":"read_file","path":"src/checkout/cart.ts","lines":277,"tokens":107078,"cost":0.20345}
+{"id":"ev_00ba","t":401655,"type":"run","cmd":"npm test -- --repeat 20"}
+{"id":"ev_00bb","t":410158,"type":"run_result","cmd":"npm test -- --repeat 20","exit":0,"tokens":107817,"cost":0.20485}
+{"id":"ev_00bc","t":413671,"type":"edit","path":"src/checkout/cart.ts","added":15,"removed":7,"tokens":111047,"cost":0.21099}
+{"id":"ev_00bd","t":414171,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_00be","t":414344,"type":"delta","text":"the helper"}
+{"id":"ev_00bf","t":414550,"type":"delta","text":"resolves before"}
+{"id":"ev_00bg","t":414847,"type":"delta","text":"the microtask"}
+{"id":"ev_00bh","t":415195,"type":"delta","text":"queue drains,"}
+{"id":"ev_00bi","t":415515,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00bj","t":415816,"type":"delta","text":"on a stale"}
+{"id":"ev_00bk","t":416112,"type":"delta","text":"render, this"}
+{"id":"ev_00bl","t":416307,"type":"delta","text":"only fails"}
+{"id":"ev_00bm","t":416635,"type":"delta","text":"when the runner"}
+{"id":"ev_00bn","t":416845,"type":"delta","text":"is under load"}
+{"id":"ev_00bo","t":418531,"type":"step_end","step":12}
+{"id":"ev_00bp","t":423153,"type":"step_start","step":13}
+{"id":"ev_00bq","t":423653,"type":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_00br","t":423851,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00bs","t":424139,"type":"delta","text":"on a stale"}
+{"id":"ev_00bt","t":424394,"type":"delta","text":"render, the"}
+{"id":"ev_00bu","t":424753,"type":"delta","text":"spec asserts"}
+{"id":"ev_00bv","t":425093,"type":"delta","text":"on a stale"}
+{"id":"ev_00bw","t":425358,"type":"delta","text":"render, a fake"}
+{"id":"ev_00bx","t":425694,"type":"delta","text":"timer is cleaner"}
+{"id":"ev_00by","t":425820,"type":"delta","text":"than a sleep"}
+{"id":"ev_00bz","t":426152,"type":"delta","text":"here"}
+{"id":"ev_00c0","t":426652,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_00c1","t":426971,"type":"delta","text":"this only fails"}
+{"id":"ev_00c2","t":427103,"type":"delta","text":"when the runner"}
+{"id":"ev_00c3","t":427434,"type":"delta","text":"is under load,"}
+{"id":"ev_00c4","t":427640,"type":"delta","text":"this only fails"}
+{"id":"ev_00c5","t":427977,"type":"delta","text":"when the runner"}
+{"id":"ev_00c6","t":428268,"type":"delta","text":"is under load,"}
+{"id":"ev_00c7","t":428610,"type":"delta","text":"the helper"}
+{"id":"ev_00c8","t":428928,"type":"delta","text":"resolves before"}
+{"id":"ev_00c9","t":429130,"type":"delta","text":"the microtask"}
+{"id":"ev_00ca","t":429418,"type":"delta","text":"queue drains"}
+{"id":"ev_00cb","t":431928,"type":"read_file","path":"tests/helpers/render.ts","lines":276,"tokens":115106,"cost":0.2187}
+{"id":"ev_00cc","t":432854,"type":"read_file","path":"tests/checkout.spec.ts","lines":310,"tokens":116890,"cost":0.22209}
+{"id":"ev_00cd","t":434158,"type":"read_file","path":"tests/helpers/render.ts","lines":338,"tokens":118604,"cost":0.22535}
+{"id":"ev_00ce","t":435316,"type":"step_end","step":13}
+{"id":"ev_00cf","t":443713,"type":"step_start","step":14}
+{"id":"ev_00cg","t":444213,"type":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_00ch","t":444527,"type":"delta","text":"the assertion"}
+{"id":"ev_00ci","t":444839,"type":"delta","text":"races a debounced"}
+{"id":"ev_00cj","t":445184,"type":"delta","text":"write, rolling"}
+{"id":"ev_00ck","t":445431,"type":"delta","text":"back the last"}
+{"id":"ev_00cl","t":445611,"type":"delta","text":"edit, it hid"}
+{"id":"ev_00cm","t":445819,"type":"delta","text":"the real cause,"}
+{"id":"ev_00cn","t":446008,"type":"delta","text":"the assertion"}
+{"id":"ev_00co","t":446222,"type":"delta","text":"races a debounced"}
+{"id":"ev_00cp","t":446369,"type":"delta","text":"write"}
+{"id":"ev_00cq","t":447069,"type":"run","cmd":"npm run lint"}
+{"id":"ev_00cr","t":454348,"type":"run_result","cmd":"npm run lint","exit":0,"tokens":121113,"cost":0.23011}
+{"id":"ev_00cs","t":454848,"type":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_00ct","t":455109,"type":"delta","text":"this only fails"}
+{"id":"ev_00cu","t":455329,"type":"delta","text":"when the runner"}
+{"id":"ev_00cv","t":455531,"type":"delta","text":"is under load,"}
+{"id":"ev_00cw","t":455841,"type":"delta","text":"this only fails"}
+{"id":"ev_00cx","t":456076,"type":"delta","text":"when the runner"}
+{"id":"ev_00cy","t":456355,"type":"delta","text":"is under load,"}
+{"id":"ev_00cz","t":456596,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00d0","t":456778,"type":"delta","text":"on a stale"}
+{"id":"ev_00d1","t":457031,"type":"delta","text":"render"}
+{"id":"ev_00d2","t":458489,"type":"read_file","path":"tests/checkout.spec.ts","lines":196,"tokens":123957,"cost":0.23552}
+{"id":"ev_00d3","t":458989,"type":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_00d4","t":459294,"type":"delta","text":"the assertion"}
+{"id":"ev_00d5","t":459626,"type":"delta","text":"races a debounced"}
+{"id":"ev_00d6","t":459803,"type":"delta","text":"write, a fake"}
+{"id":"ev_00d7","t":460136,"type":"delta","text":"timer is cleaner"}
+{"id":"ev_00d8","t":460476,"type":"delta","text":"than a sleep"}
+{"id":"ev_00d9","t":460698,"type":"delta","text":"here, this"}
+{"id":"ev_00da","t":460937,"type":"delta","text":"only fails"}
+{"id":"ev_00db","t":461166,"type":"delta","text":"when the runner"}
+{"id":"ev_00dc","t":461524,"type":"delta","text":"is under load"}
+{"id":"ev_00dd","t":462024,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00de","t":462350,"type":"delta","text":"confirm against"}
+{"id":"ev_00df","t":462479,"type":"delta","text":"the CI history"}
+{"id":"ev_00dg","t":462699,"type":"delta","text":"before touching"}
+{"id":"ev_00dh","t":462934,"type":"delta","text":"the source,"}
+{"id":"ev_00di","t":463082,"type":"delta","text":"the helper"}
+{"id":"ev_00dj","t":463403,"type":"delta","text":"resolves before"}
+{"id":"ev_00dk","t":463781,"type":"delta","text":"the microtask"}
+{"id":"ev_00dl","t":464106,"type":"delta","text":"queue drains,"}
+{"id":"ev_00dm","t":464466,"type":"delta","text":"a fake timer"}
+{"id":"ev_00dn","t":464621,"type":"delta","text":"is cleaner"}
+{"id":"ev_00do","t":464920,"type":"delta","text":"than a sleep"}
+{"id":"ev_00dp","t":465268,"type":"delta","text":"here"}
+{"id":"ev_00dq","t":467006,"type":"step_end","step":14}
+{"id":"ev_00dr","t":464606,"type":"note","text":"clock resynced"}
+{"id":"ev_00ds","t":470901,"type":"step_start","step":15}
+{"id":"ev_00dt","t":471601,"type":"run","cmd":"npm test -- --repeat 20"}
+{"id":"ev_00du","t":478831,"type":"run_result","cmd":"npm test -- --repeat 20","exit":0,"tokens":127500,"cost":0.24225}
+{"id":"ev_00dv","t":480383,"type":"edit","path":"vitest.config.ts","added":3,"removed":1,"tokens":131450,"cost":0.24976}
+{"id":"ev_00dw","t":484100,"type":"edit","path":"tests/helpers/render.ts","added":17,"removed":7,"tokens":134731,"cost":0.25599}
+{"id":"ev_00dx","t":484600,"type":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_00dy","t":484968,"type":"delta","text":"confirm against"}
+{"id":"ev_00dz","t":485135,"type":"delta","text":"the CI history"}
+{"id":"ev_00e0","t":485310,"type":"delta","text":"before touching"}
+{"id":"ev_00e1","t":485523,"type":"delta","text":"the source,"}
+{"id":"ev_00e2","t":485724,"type":"delta","text":"the helper"}
+{"id":"ev_00e3","t":485952,"type":"delta","text":"resolves before"}
+{"id":"ev_00e4","t":486181,"type":"delta","text":"the microtask"}
+{"id":"ev_00e5","t":486529,"type":"delta","text":"queue drains,"}
+{"id":"ev_00e6","t":486793,"type":"delta","text":"confirm against"}
+{"id":"ev_00e7","t":486961,"type":"delta","text":"the CI history"}
+{"id":"ev_00e8","t":487218,"type":"delta","text":"before touching"}
+{"id":"ev_00e9","t":487574,"type":"delta","text":"the source"}
+{"id":"ev_00ea","t":488555,"type":"step_end","step":15}
+{"id":"ev_00eb","t":495591,"type":"step_start","step":16}
+{"id":"ev_00ec","t":497959,"type":"read_file","path":"src/lib/clock.ts","lines":300,"tokens":137248,"cost":0.26077}
+{"id":"ev_00ed","t":498890,"type":"read_file","path":"tests/helpers/render.ts","lines":226,"tokens":138635,"cost":0.26341}
+{"id":"ev_00ee","t":499390,"type":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_00ef","t":499576,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00eg","t":499781,"type":"delta","text":"on a stale"}
+{"id":"ev_00eh","t":499945,"type":"delta","text":"render, confirm"}
+{"id":"ev_00ei","t":500217,"type":"delta","text":"against the"}
+{"id":"ev_00ej","t":500344,"type":"delta","text":"CI history"}
+{"id":"ev_00ek","t":500468,"type":"delta","text":"before touching"}
+{"id":"ev_00el","t":500725,"type":"delta","text":"the source,"}
+{"id":"ev_00em","t":500921,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00en","t":501046,"type":"delta","text":"on a stale"}
+{"id":"ev_00eo","t":501185,"type":"delta","text":"render"}
+{"id":"ev_00ep","t":501685,"type":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_00eq","t":501994,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00er","t":502332,"type":"delta","text":"on a stale"}
+{"id":"ev_00es","t":502589,"type":"delta","text":"render, the"}
+{"id":"ev_00et","t":502736,"type":"delta","text":"helper resolves"}
+{"id":"ev_00eu","t":502995,"type":"delta","text":"before the"}
+{"id":"ev_00ev","t":503242,"type":"delta","text":"microtask queue"}
+{"id":"ev_00ew","t":503472,"type":"delta","text":"drains, confirm"}
+{"id":"ev_00ex","t":503803,"type":"delta","text":"against the"}
+{"id":"ev_00ey","t":503929,"type":"delta","text":"CI history"}
+{"id":"ev_00ez","t":504140,"type":"delta","text":"before touching"}
+{"id":"ev_00f0","t":504276,"type":"delta","text":"the source"}
+{"id":"ev_00f1","t":505176,"type":"step_end","step":16}
+{"id":"ev_00f2","t":508720,"type":"step_start","step":17}
+{"id":"ev_00f3","t":509923,"type":"read_file","path":"package.json","lines":262,"tokens":142026,"cost":0.26985}
+{"id":"ev_00f4","t":511825,"type":"edit","path":"src/checkout/session.ts","added":6,"removed":4,"tokens":146083,"cost":0.27756}
+{"id":"ev_00f5","t":513447,"type":"edit","path":"vitest.config.ts","added":7,"removed":8,"tokens":148144,"cost":0.28147}
+{"id":"ev_00f6","t":514378,"type":"read_file","path":"package.json","lines":242,"tokens":150180,"cost":0.28534}
+{"id":"ev_00f7","t":516151,"type":"step_end","step":17}
+{"id":"ev_00f8","t":524089,"type":"step_start","step":18}
+{"id":"ev_00f9","t":524589,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00fa","t":524730,"type":"delta","text":"the assertion"}
+{"id":"ev_00fb","t":524913,"type":"delta","text":"races a debounced"}
+{"id":"ev_00fc","t":525158,"type":"delta","text":"write, rolling"}
+{"id":"ev_00fd","t":525484,"type":"delta","text":"back the last"}
+{"id":"ev_00fe","t":525834,"type":"delta","text":"edit, it hid"}
+{"id":"ev_00ff","t":526136,"type":"delta","text":"the real cause,"}
+{"id":"ev_00fg","t":526366,"type":"delta","text":"a fake timer"}
+{"id":"ev_00fh","t":526546,"type":"delta","text":"is cleaner"}
+{"id":"ev_00fi","t":526777,"type":"delta","text":"than a sleep"}
+{"id":"ev_00fj","t":526947,"type":"delta","text":"here"}
+{"id":"ev_00fk","t":527447,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_00fl","t":527700,"type":"delta","text":"this only fails"}
+{"id":"ev_00fm","t":527998,"type":"delta","text":"when the runner"}
+{"id":"ev_00fn","t":528337,"type":"delta","text":"is under load,"}
+{"id":"ev_00fo","t":528491,"type":"delta","text":"a fake timer"}
+{"id":"ev_00fp","t":528737,"type":"delta","text":"is cleaner"}
+{"id":"ev_00fq","t":528877,"type":"delta","text":"than a sleep"}
+{"id":"ev_00fr","t":529139,"type":"delta","text":"here, the spec"}
+{"id":"ev_00fs","t":529448,"type":"delta","text":"asserts on"}
+{"id":"ev_00ft","t":529642,"type":"delta","text":"a stale render"}
+{"id":"ev_00fu","t":530634,"type":"read_file","path":"src/checkout/cart.ts","lines":340,"tokens":153946,"cost":0.2925}
+{"id":"ev_00fv","t":532815,"type":"edit","path":"src/checkout/cart.ts","added":2,"removed":8,"tokens":157233,"cost":0.29874}
+{"id":"ev_00fw","t":534211,"type":"step_end","step":18}
+{"id":"ev_00fx","t":543447,"type":"step_start","step":19}
+{"id":"ev_00fy","t":543947,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00fz","t":544236,"type":"delta","text":"a fake timer"}
+{"id":"ev_00g0","t":544513,"type":"delta","text":"is cleaner"}
+{"id":"ev_00g1","t":544738,"type":"delta","text":"than a sleep"}
+{"id":"ev_00g2","t":545050,"type":"delta","text":"here, a fake"}
+{"id":"ev_00g3","t":545323,"type":"delta","text":"timer is cleaner"}
+{"id":"ev_00g4","t":545548,"type":"delta","text":"than a sleep"}
+{"id":"ev_00g5","t":545742,"type":"delta","text":"here, the spec"}
+{"id":"ev_00g6","t":545890,"type":"delta","text":"asserts on"}
+{"id":"ev_00g7","t":546216,"type":"delta","text":"a stale render"}
+{"id":"ev_00g8","t":546716,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_00g9","t":546875,"type":"delta","text":"confirm against"}
+{"id":"ev_00ga","t":547034,"type":"delta","text":"the CI history"}
+{"id":"ev_00gb","t":547411,"type":"delta","text":"before touching"}
+{"id":"ev_00gc","t":547535,"type":"delta","text":"the source,"}
+{"id":"ev_00gd","t":547833,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00ge","t":548030,"type":"delta","text":"on a stale"}
+{"id":"ev_00gf","t":548368,"type":"delta","text":"render, this"}
+{"id":"ev_00gg","t":548593,"type":"delta","text":"only fails"}
+{"id":"ev_00gh","t":548871,"type":"delta","text":"when the runner"}
+{"id":"ev_00gi","t":549020,"type":"delta","text":"is under load"}
+{"id":"ev_00gj","t":551527,"type":"read_file","path":"src/checkout/session.ts","lines":347,"tokens":161319,"cost":0.30651}
+{"id":"ev_00gk","t":552027,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00gl","t":552183,"type":"delta","text":"a fake timer"}
+{"id":"ev_00gm","t":552336,"type":"delta","text":"is cleaner"}
+{"id":"ev_00gn","t":552588,"type":"delta","text":"than a sleep"}
+{"id":"ev_00go","t":552731,"type":"delta","text":"here, a fake"}
+{"id":"ev_00gp","t":553036,"type":"delta","text":"timer is cleaner"}
+{"id":"ev_00gq","t":553360,"type":"delta","text":"than a sleep"}
+{"id":"ev_00gr","t":553508,"type":"delta","text":"here, the helper"}
+{"id":"ev_00gs","t":553760,"type":"delta","text":"resolves before"}
+{"id":"ev_00gt","t":554038,"type":"delta","text":"the microtask"}
+{"id":"ev_00gu","t":554167,"type":"delta","text":"queue drains"}
+{"id":"ev_00gv","t":554667,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_00gw","t":554879,"type":"delta","text":"the assertion"}
+{"id":"ev_00gx","t":555086,"type":"delta","text":"races a debounced"}
+{"id":"ev_00gy","t":555364,"type":"delta","text":"write, this"}
+{"id":"ev_00gz","t":555705,"type":"delta","text":"only fails"}
+{"id":"ev_00h0","t":555903,"type":"delta","text":"when the runner"}
+{"id":"ev_00h1","t":556153,"type":"delta","text":"is under load,"}
+{"id":"ev_00h2","t":556391,"type":"delta","text":"a fake timer"}
+{"id":"ev_00h3","t":556585,"type":"delta","text":"is cleaner"}
+{"id":"ev_00h4","t":556900,"type":"delta","text":"than a sleep"}
+{"id":"ev_00h5","t":557188,"type":"delta","text":"here"}
+{"id":"ev_00h6","t":559286,"type":"step_end","step":19}
+
+{"id":"ev_00h7","t":565922,"type":"step_start","step":20}
+{"id":"ev_00h8","t":568201,"type":"read_file","path":"tests/helpers/render.ts","lines":150,"tokens":168501,"cost":0.32015}
+{"id":"ev_00h9","t":568701,"type":"thinking","text":"the helper resolves before the microtask queue drains"}
+{"id":"ev_00ha","t":568850,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00hb","t":569107,"type":"delta","text":"on a stale"}
+{"id":"ev_00hc","t":569421,"type":"delta","text":"render, rolling"}
+{"id":"ev_00hd","t":569739,"type":"delta","text":"back the last"}
+{"id":"ev_00he","t":569940,"type":"delta","text":"edit, it hid"}
+{"id":"ev_00hf","t":570183,"type":"delta","text":"the real cause,"}
+{"id":"ev_00hg","t":570336,"type":"delta","text":"the assertion"}
+{"id":"ev_00hh","t":570486,"type":"delta","text":"races a debounced"}
+{"id":"ev_00hi","t":570754,"type":"delta","text":"write"}
+{"id":"ev_00hj","t":573607,"type":"read_file","path":"src/checkout/debounce.ts","lines":205,"tokens":171772,"cost":0.32637}
+{"id":"ev_00hk","t":574107,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00hl","t":574229,"type":"delta","text":"confirm against"}
+{"id":"ev_00hm","t":574406,"type":"delta","text":"the CI history"}
+{"id":"ev_00hn","t":574622,"type":"delta","text":"before touching"}
+{"id":"ev_00ho","t":574757,"type":"delta","text":"the source,"}
+{"id":"ev_00hp","t":574957,"type":"delta","text":"the assertion"}
+{"id":"ev_00hq","t":575107,"type":"delta","text":"races a debounced"}
+{"id":"ev_00hr","t":575477,"type":"delta","text":"write, a fake"}
+{"id":"ev_00hs","t":575767,"type":"delta","text":"timer is cleaner"}
+{"id":"ev_00ht","t":575971,"type":"delta","text":"than a sleep"}
+{"id":"ev_00hu","t":576171,"type":"delta","text":"here"}
+{"id":"ev_00hv","t":576671,"type":"thinking","text":"the spec asserts on a stale render"}
+{"id":"ev_00hw","t":576870,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00hx","t":577096,"type":"delta","text":"on a stale"}
+{"id":"ev_00hy","t":577332,"type":"delta","text":"render, confirm"}
+{"id":"ev_00hz","t":577680,"type":"delta","text":"against the"}
+{"id":"ev_00i0","t":577828,"type":"delta","text":"CI history"}
+{"id":"ev_00i1","t":578054,"type":"delta","text":"before touching"}
+{"id":"ev_00i2","t":578227,"type":"delta","text":"the source,"}
+{"id":"ev_00i3","t":578388,"type":"delta","text":"confirm against"}
+{"id":"ev_00i4","t":578643,"type":"delta","text":"the CI history"}
+{"id":"ev_00i5","t":578878,"type":"delta","text":"before touching"}
+{"id":"ev_00i6","t":579121,"type":"delta","text":"the source"}
+{"id":"ev_00i7","t":579621,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_00i8","t":579761,"type":"delta","text":"this only fails"}
+{"id":"ev_00i9","t":579960,"type":"delta","text":"when the runner"}
+{"id":"ev_00ia","t":580330,"type":"delta","text":"is under load,"}
+{"id":"ev_00ib","t":580495,"type":"delta","text":"the helper"}
+{"id":"ev_00ic","t":580624,"type":"delta","text":"resolves before"}
+{"id":"ev_00id","t":580996,"type":"delta","text":"the microtask"}
+{"id":"ev_00ie","t":581243,"type":"delta","text":"queue drains,"}
+{"id":"ev_00if","t":581381,"type":"delta","text":"confirm against"}
+{"id":"ev_00ig","t":581541,"type":"delta","text":"the CI history"}
+{"id":"ev_00ih","t":581836,"type":"delta","text":"before touching"}
+{"id":"ev_00ii","t":581999,"type":"delta","text":"the source"}
+{"id":"ev_00ij","t":584090,"type":"read_file","path":"src/checkout/session.ts","lines":102,"tokens":179568,"cost":0.34118}
+{"id":"ev_00ik","t":584774,"type":"step_end","step":20}
+{"id":"ev_00il","t":592065,"type":"step_start","step":21}
+{"id":"ev_00im","t":592565,"type":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_00in","t":592706,"type":"delta","text":"a fake timer"}
+{"id":"ev_00io","t":592988,"type":"delta","text":"is cleaner"}
+{"id":"ev_00ip","t":593279,"type":"delta","text":"than a sleep"}
+{"id":"ev_00iq","t":593484,"type":"delta","text":"here, rolling"}
+{"id":"ev_00ir","t":593657,"type":"delta","text":"back the last"}
+{"id":"ev_00is","t":593937,"type":"delta","text":"edit, it hid"}
+{"id":"ev_00it","t":594178,"type":"delta","text":"the real cause,"}
+{"id":"ev_00iu","t":594426,"type":"delta","text":"a fake timer"}
+{"id":"ev_00iv","t":594697,"type":"delta","text":"is cleaner"}
+{"id":"ev_00iw","t":594900,"type":"delta","text":"than a sleep"}
+{"id":"ev_00ix","t":595113,"type":"delta","text":"here"}
+{"id":"ev_00iy","t":595613,"type":"thinking","text":"the spec asserts on a stale render"}
+{"id":"ev_00iz","t":595973,"type":"delta","text":"the assertion"}
+{"id":"ev_00j0","t":596326,"type":"delta","text":"races a debounced"}
+{"id":"ev_00j1","t":596572,"type":"delta","text":"write, the"}
+{"id":"ev_00j2","t":596754,"type":"delta","text":"assertion races"}
+{"id":"ev_00j3","t":596917,"type":"delta","text":"a debounced"}
+{"id":"ev_00j4","t":597056,"type":"delta","text":"write, the"}
+{"id":"ev_00j5","t":597222,"type":"delta","text":"assertion races"}
+{"id":"ev_00j6","t":597523,"type":"delta","text":"a debounced"}
+{"id":"ev_00j7","t":597899,"type":"delta","text":"write"}
+{"id":"ev_00j8","t":598599,"type":"run","cmd":"npm test -- --repeat 20"}
+{"id":"ev_00j9","t":615894,"type":"run_result","cmd":"npm test -- --repeat 20","exit":0,"tokens":183809,"cost":0.34924}
+{"id":"ev_00ja","t":620125,"type":"edit","path":"src/checkout/debounce.ts","added":7,"removed":5,"tokens":187041,"cost":0.35538}
+{"id":"ev_00jb","t":620625,"type":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_00jc","t":620766,"type":"delta","text":"confirm against"}
+{"id":"ev_00jd","t":620967,"type":"delta","text":"the CI history"}
+{"id":"ev_00je","t":621119,"type":"delta","text":"before touching"}
+{"id":"ev_00jf","t":621418,"type":"delta","text":"the source,"}
+{"id":"ev_00jg","t":621789,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00jh","t":622066,"type":"delta","text":"on a stale"}
+{"id":"ev_00ji","t":622202,"type":"delta","text":"render, the"}
+{"id":"ev_00jj","t":622459,"type":"delta","text":"spec asserts"}
+{"id":"ev_00jk","t":622589,"type":"delta","text":"on a stale"}
+{"id":"ev_00jl","t":622754,"type":"delta","text":"render"}
+{"id":"ev_00jm","t":624372,"type":"step_end","step":21}
+  {"id":"ev_00zz", "t": 624372, "type":"warning", "text":"runner throttled" }  
+{"id":"ev_00jn","t":633151,"type":"step_start","step":22}
+{"id":"ev_00jo","t":633651,"type":"thinking","text":"a fake timer is cleaner than a sleep here"}
+{"id":"ev_00jp","t":633814,"type":"delta","text":"a fake timer"}
+{"id":"ev_00jq","t":634151,"type":"delta","text":"is cleaner"}
+{"id":"ev_00jr","t":634297,"type":"delta","text":"than a sleep"}
+{"id":"ev_00js","t":634570,"type":"delta","text":"here, the helper"}
+{"id":"ev_00jt","t":634900,"type":"delta","text":"resolves before"}
+{"id":"ev_00ju","t":635194,"type":"delta","text":"the microtask"}
+{"id":"ev_00jv","t":635362,"type":"delta","text":"queue drains,"}
+{"id":"ev_00jw","t":635616,"type":"delta","text":"a fake timer"}
+{"id":"ev_00jx","t":635742,"type":"delta","text":"is cleaner"}
+{"id":"ev_00jy","t":635901,"type":"delta","text":"than a sleep"}
+{"id":"ev_00jz","t":636130,"type":"delta","text":"here"}
+{"id":"ev_00k0","t":636630,"type":"thinking","text":"confirm against the CI history before touching the source"}
+{"id":"ev_00k1","t":636861,"type":"delta","text":"confirm against"}
+{"id":"ev_00k2","t":637153,"type":"delta","text":"the CI history"}
+{"id":"ev_00k3","t":637386,"type":"delta","text":"before touching"}
+{"id":"ev_00k4","t":637579,"type":"delta","text":"the source,"}
+{"id":"ev_00k5","t":637737,"type":"delta","text":"this only fails"}
+{"id":"ev_00k6","t":637950,"type":"delta","text":"when the runner"}
+{"id":"ev_00k7","t":638269,"type":"delta","text":"is under load,"}
+{"id":"ev_00k8","t":638487,"type":"delta","text":"the assertion"}
+{"id":"ev_00k9","t":638764,"type":"delta","text":"races a debounced"}
+{"id":"ev_00ka","t":639041,"type":"delta","text":"write"}
+{"id":"ev_00kb","t":641653,"type":"read_file","path":"tests/checkout.spec.ts","lines":392,"tokens":192140,"cost":0.36507}
+{"id":"ev_00kc","t":645717,"type":"edit","path":"tests/checkout.spec.ts","added":21,"removed":7,"tokens":196186,"cost":0.37275}
+{"id":"ev_00kd","t":647418,"type":"read_file","path":"src/checkout/cart.ts","lines":190,"tokens":198870,"cost":0.37785}
+{"id":"ev_00ke","t":648965,"type":"edit","path":"src/checkout/session.ts","added":23,"removed":5,"tokens":201783,"cost":0.38339}
+{"id":"ev_00kf","t":650947,"type":"step_end","step":22}
+{"id":"ev_00kg","t":654867,"type":"step_start","step":23}
+{"id":"ev_00kh","t":655567,"type":"run","cmd":"npm run typecheck"}
+{"id":"ev_00ki","t":670630,"type":"run_result","cmd":"npm run typecheck","exit":1,"tokens":202715,"cost":0.38516}
+{"id":"ev_00kj","t":671130,"type":"thinking","text":"rolling back the last edit, it hid the real cause"}
+{"id":"ev_00kk","t":671417,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00kl","t":671655,"type":"delta","text":"on a stale"}
+{"id":"ev_00km","t":671976,"type":"delta","text":"render, confirm"}
+{"id":"ev_00kn","t":672315,"type":"delta","text":"against the"}
+{"id":"ev_00ko","t":672684,"type":"delta","text":"CI history"}
+{"id":"ev_00kp","t":672895,"type":"delta","text":"before touching"}
+{"id":"ev_00kq","t":673150,"type":"delta","text":"the source,"}
+{"id":"ev_00kr","t":673312,"type":"delta","text":"the assertion"}
+{"id":"ev_00ks","t":673476,"type":"delta","text":"races a debounced"}
+{"id":"ev_00kt","t":673698,"type":"delta","text":"write"}
+{"id":"ev_00ku","t":676078,"type":"edit","path":"src/checkout/debounce.ts","added":8,"removed":4,"tokens":205951,"cost":0.39131}
+{"id":"ev_00kv","t":676578,"type":"thinking","text":"the spec asserts on a stale render"}
+{"id":"ev_00kw","t":676788,"type":"delta","text":"rolling back"}
+{"id":"ev_00kx","t":676985,"type":"delta","text":"the last edit,"}
+{"id":"ev_00ky","t":677309,"type":"delta","text":"it hid the"}
+{"id":"ev_00kz","t":677485,"type":"delta","text":"real cause,"}
+{"id":"ev_00l0","t":677797,"type":"delta","text":"a fake timer"}
+{"id":"ev_00l1","t":678056,"type":"delta","text":"is cleaner"}
+{"id":"ev_00l2","t":678389,"type":"delta","text":"than a sleep"}
+{"id":"ev_00l3","t":678742,"type":"delta","text":"here, the spec"}
+{"id":"ev_00l4","t":678904,"type":"delta","text":"asserts on"}
+{"id":"ev_00l5","t":679063,"type":"delta","text":"a stale render"}
+{"id":"ev_00l6","t":679563,"type":"thinking","text":"this only fails when the runner is under load"}
+{"id":"ev_00l7","t":679751,"type":"delta","text":"rolling back"}
+{"id":"ev_00l8","t":679923,"type":"delta","text":"the last edit,"}
+{"id":"ev_00l9","t":680090,"type":"delta","text":"it hid the"}
+{"id":"ev_00la","t":680290,"type":"delta","text":"real cause,"}
+{"id":"ev_00lb","t":680588,"type":"delta","text":"the assertion"}
+{"id":"ev_00lc","t":680912,"type":"delta","text":"races a debounced"}
+{"id":"ev_00ld","t":681158,"type":"delta","text":"write, the"}
+{"id":"ev_00le","t":681347,"type":"delta","text":"spec asserts"}
+{"id":"ev_00lf","t":681656,"type":"delta","text":"on a stale"}
+{"id":"ev_00lg","t":681824,"type":"delta","text":"render"}
+{"id":"ev_00lh","t":682324,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_00li","t":682610,"type":"delta","text":"the assertion"}
+{"id":"ev_00lj","t":682741,"type":"delta","text":"races a debounced"}
+{"id":"ev_00lk","t":682985,"type":"delta","text":"write, this"}
+{"id":"ev_00ll","t":683312,"type":"delta","text":"only fails"}
+{"id":"ev_00lm","t":683668,"type":"delta","text":"when the runner"}
+{"id":"ev_00ln","t":683960,"type":"delta","text":"is under load,"}
+{"id":"ev_00lo","t":684175,"type":"delta","text":"rolling back"}
+{"id":"ev_00lp","t":684425,"type":"delta","text":"the last edit,"}
+{"id":"ev_00lq","t":684588,"type":"delta","text":"it hid the"}
+{"id":"ev_00lr","t":684800,"type":"delta","text":"real cause"}
+{"id":"ev_00ls","t":686751,"type":"step_end","step":23}
+{"id":"ev_00lt","t":691270,"type":"step_start","step":24}
+{"id":"ev_00lu","t":691770,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_00lv","t":692090,"type":"delta","text":"the helper"}
+{"id":"ev_00lw","t":692270,"type":"delta","text":"resolves before"}
+{"id":"ev_00lx","t":692398,"type":"delta","text":"the microtask"}
+{"id":"ev_00ly","t":692567,"type":"delta","text":"queue drains,"}
+{"id":"ev_00lz","t":692747,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00m0","t":692874,"type":"delta","text":"on a stale"}
+{"id":"ev_00m1","t":693123,"type":"delta","text":"render, confirm"}
+{"id":"ev_00m2","t":693271,"type":"delta","text":"against the"}
+{"id":"ev_00m3","t":693576,"type":"delta","text":"CI history"}
+{"id":"ev_00m4","t":693835,"type":"delta","text":"before touching"}
+{"id":"ev_00m5","t":694136,"type":"delta","text":"the source"}
+{"id":"ev_00m6","t":694636,"type":"thinking","text":"the assertion races a debounced write"}
+{"id":"ev_00m7","t":694760,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00m8","t":695118,"type":"delta","text":"on a stale"}
+{"id":"ev_00m9","t":695444,"type":"delta","text":"render, rolling"}
+{"id":"ev_00ma","t":695686,"type":"delta","text":"back the last"}
+{"id":"ev_00mb","t":695880,"type":"delta","text":"edit, it hid"}
+{"id":"ev_00mc","t":696066,"type":"delta","text":"the real cause,"}
+{"id":"ev_00md","t":696398,"type":"delta","text":"the spec asserts"}
+{"id":"ev_00me","t":696759,"type":"delta","text":"on a stale"}
+{"id":"ev_00mf","t":697090,"type":"delta","text":"render"}
+{"id":"ev_00mg","t":700426,"type":"read_file","path":"src/lib/clock.ts","lines":305,"tokens":214398,"cost":0.40736}
+{"id":"ev_00mh","t":702086,"type":"step_end","step":24}
+{"id":"ev_00mi","t":703586,"type":"commit","sha":"9c1f4ae","files":3,"message":"fix flaky checkout test"}
+{"id":"ev_00mj","t":705586,"type":"pull_request","number":14,"title":"session replay player","added":612,"removed":8,"files":7}
+{"id":"ev_00mk","t":706386,"type":"session_end","steps":24,"duration_ms":706386,"tokens":214398,"cost":0.40736}

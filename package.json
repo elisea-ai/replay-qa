@@ -1,0 +1,16 @@
+{
+  "name": "session-replay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Tools for reading agent session traces",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}
