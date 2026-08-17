@@ -40,35 +40,55 @@ secondary: small and muted. Counters are large numerals, no cards or borders.
 
 ## Definition of done
 
-This is a checklist. Every item is verified against a **completed** session from
-`logs/session-4f1e.ndjson` — 816 lines, 24 steps, 11:46. Not against an empty page.
+Every item is verified against a **completed** session from `logs/session-4f1e.ndjson`
+— 816 lines, 24 steps, 11:46. Not against an empty page. Report each as pass or fail.
 
-1. **Timeline blocks are visible.** Twenty-four rectangles, grey before playback
-   and black after. Common mistake: blocks get `position:absolute` with `left`
-   and `width` but no vertical size, their height collapses to zero, and the
-   timeline looks like an empty strip.
+### Parsing
 
-2. **The page is exactly viewport height and does not scroll.**
-   `document.documentElement.scrollHeight` equals `innerHeight`.
+1. Both schemas are read: old `ts`/`kind` in seconds, new `t`/`type` in milliseconds.
+2. A truncated line is skipped without aborting the rest of the file.
+3. Blank lines are skipped.
+4. Lines with stray leading or trailing whitespace are still parsed.
+5. A duplicate `id` does not produce a duplicate event.
+6. A timestamp that goes backwards does not reorder or break the timeline.
 
-3. **The transcript is the only shrinkable element.** Its parent must be a
-   fixed-height column flex container, otherwise `flex:1` never reaches it.
-   Verify on a completed session: the transcript's `scrollHeight` is clearly
-   larger than its `clientHeight`. If they are equal, it is wrong.
+### Numbers
 
-4. **The transcript follows the playhead.** After every new event it is scrolled
-   to the bottom: `scrollTop` close to `scrollHeight - clientHeight`. On a
-   completed session the last events are visible, not the first ones.
+7. Final step count reads 24.
+8. Final token count reads 214.4k.
+9. Final cost reads $0.41.
+10. Total duration reads 11:46.
+11. Counters only ever grow during playback, never jump backwards.
 
-5. **Controls stay in frame.** The bottom edge of the row holding Play, Restart
-   and the speed slider never exceeds `innerHeight`, at the start or at the end.
+### Layout
 
-6. **Seeking repaints everything.** After a click on the timeline the blocks,
-   the playhead and the elapsed readout must match the new position, not only
-   the counters and the transcript.
+12. The page is exactly viewport height: `scrollHeight` equals `innerHeight`.
+13. The page itself never scrolls.
+14. The transcript is the only shrinkable element: on a finished session its
+    `scrollHeight` is clearly larger than its `clientHeight`.
+15. Controls stay inside the viewport at the start and at the end of playback.
+16. All 24 timeline blocks are visible, with a vertical size greater than zero.
+17. Nothing overlaps or overflows at 1600×900 and at 1280×720.
 
-7. **Parsing is correct.** On this file the final counters read exactly:
-   24 steps, 214.4k tokens, $0.41, duration 11:46.
+### Playback
+
+18. The playhead moves left to right as the session plays.
+19. Blocks turn from grey to black as they are passed.
+20. The transcript follows the playhead: `scrollTop` stays near the maximum.
+21. On a finished session the last events are visible, not the first ones.
+22. Initial speed is read from the URL, e.g. `index.html?speed=140`.
+
+### Interaction
+
+23. Pause stops playback and Play resumes from the same position.
+24. Restart returns everything to zero: counters, blocks, transcript, playhead.
+25. Clicking the timeline repaints everything — blocks, playhead and the elapsed
+    readout — not only the counters and the transcript.
+
+### Robustness
+
+26. A file with 816 events opens without a visible delay.
+27. The page works from a plain file, with no network and no external resources.
 
 ## How we verify
 
