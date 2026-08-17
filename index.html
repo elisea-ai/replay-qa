@@ -19,37 +19,36 @@
       --font:      "Inter","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
       --mono:      "SF Mono",Menlo,ui-monospace,monospace;
       --r:         14px;
-      --gap:       24px;
     }
     html,body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0;height:100vh;display:flex;flex-direction:column}
     *{box-sizing:border-box}
-    .container{flex:1;display:flex;flex-direction:column;max-width:1200px;width:100%;margin:0 auto;padding:24px 24px 16px}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-    .header h1{font-size:28px;font-weight:700;margin:0}
-    .session-info{color:var(--muted);font-size:14px}
-    .timeline{background:var(--surface);border-radius:var(--r);padding:20px 24px;position:relative;cursor:pointer;flex-shrink:0}
-    .timeline .bar{display:flex;gap:5px;height:160px;align-items:stretch;position:relative}
+    .container{flex:1;display:flex;flex-direction:column;max-width:1200px;width:100%;margin:0 auto;padding:16px 24px 12px;min-height:0}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-shrink:0}
+    .header h1{font-size:24px;font-weight:700;margin:0}
+    .session-info{color:var(--muted);font-size:13px}
+    .timeline{background:var(--surface);border-radius:var(--r);padding:16px 24px;position:relative;cursor:pointer;flex-shrink:0}
+    .timeline .bar{display:flex;gap:5px;height:100px;align-items:stretch;position:relative}
     .timeline .blk{border-radius:4px;background:var(--track);transition:background .12s;position:absolute;top:0;bottom:0}
     .timeline .blk.played{background:var(--ink)}
     .timeline .blk.now{background:var(--accent)}
     .timeline .blk.think{background:var(--think)}
     .timeline .head{position:absolute;top:0;bottom:0;width:6px;background:var(--ink);border-radius:3px;transform:translateX(-50%);pointer-events:none;z-index:10}
     .timeline .head::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ink)}
-    .stats{display:flex;gap:60px;margin-top:20px;flex-shrink:0}
-    .stats u{display:block;text-decoration:none;font-family:var(--mono);font-size:20px;letter-spacing:.14em;color:var(--muted)}
-    .stats b{display:block;font-size:46px;font-weight:700;margin-top:4px}
-    .log{flex:1;margin-top:20px;border-top:1px solid var(--rule);padding-top:16px;font-family:var(--mono);font-size:18px;line-height:1.8;color:#54544E;overflow-y:auto;min-height:0}
-    .log .tag{display:inline-block;width:8em}
+    .stats{display:flex;gap:48px;margin-top:16px;flex-shrink:0}
+    .stats u{display:block;text-decoration:none;font-family:var(--mono);font-size:16px;letter-spacing:.14em;color:var(--muted)}
+    .stats b{display:block;font-size:36px;font-weight:700;margin-top:2px}
+    .log{flex:1;margin-top:16px;border-top:1px solid var(--rule);padding-top:12px;font-family:var(--mono);font-size:16px;line-height:1.7;color:#54544E;overflow-y:auto;min-height:0}
+    .log .tag{display:inline-block;width:7em}
     .log .tag.thinking{color:var(--think)}
     .log .tag.run,.log .tag.edit{color:var(--ok)}
     .log .tag.error{color:var(--fail)}
-    .controls{display:flex;gap:16px;margin-top:12px;align-items:center;flex-shrink:0}
-    .btn{background:var(--ink);color:var(--bg);border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;font-family:var(--font)}
+    .controls{display:flex;gap:12px;margin-top:12px;align-items:center;flex-shrink:0}
+    .btn{background:var(--ink);color:var(--bg);border:none;padding:8px 16px;border-radius:6px;font-size:14px;cursor:pointer;font-family:var(--font)}
     .btn:hover{opacity:0.85}
-    .speed{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
-    .speed input{width:80px}
-    .time-display{font-family:var(--mono);font-size:14px;color:var(--muted)}
-    .loading{text-align:center;padding:80px;color:var(--muted);font-size:18px}
+    .speed{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+    .speed input{width:100px}
+    .time-display{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:auto}
+    .loading{text-align:center;padding:60px;color:var(--muted);font-size:16px}
     .error{color:var(--fail);padding:20px;text-align:center}
   </style>
 </head>
@@ -69,7 +68,7 @@
       <button class="btn" id="restartBtn">Restart</button>
       <div class="speed">
         <label>Speed:</label>
-        <input type="range" id="speedSlider" min="0.5" max="20" step="0.5" value="1">
+        <input type="range" id="speedSlider" min="0.5" max="200" step="0.5" value="1">
         <span id="speedValue">1x</span>
       </div>
       <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
@@ -219,13 +218,13 @@
     }
     
     class ReplayPlayer {
-      constructor() {
+      constructor(initialSpeed = 1) {
         this.events = [];
         this.steps = [];
         this.duration = 0;
         this.currentIndex = 0;
         this.isPlaying = false;
-        this.speed = 1;
+        this.speed = initialSpeed;
         this.currentTime = 0;
         this.stats = { steps: 0, files: 0, tokens: 0, cost: 0 };
         this.initUI();
@@ -247,6 +246,9 @@
           this.speed = parseFloat(e.target.value);
           this.speedValue.textContent = `${this.speed}x`;
         });
+        
+        this.speedSlider.value = this.speed;
+        this.speedValue.textContent = `${this.speed}x`;
       }
       
       load(ndjson) {
@@ -365,6 +367,7 @@
         
         this.updatePlayhead(timeMs);
         this.updateTimeDisplay(timeMs);
+        this.log.scrollTop = this.log.scrollHeight;
       }
       
       updateTimeDisplay(timeMs) {
@@ -429,11 +432,12 @@
       }
     }
     
-    const player = new ReplayPlayer();
-    
     async function loadSession() {
       const params = new URLSearchParams(window.location.search);
       const sessionFile = params.get('session') || 'logs/session-4f1e.ndjson';
+      const speed = parseFloat(params.get('speed')) || 1;
+      
+      const player = new ReplayPlayer(speed);
       
       try {
         const response = await fetch(sessionFile);
