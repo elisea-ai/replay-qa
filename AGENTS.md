@@ -90,6 +90,19 @@ Every item is verified against a **completed** session from `logs/session-4f1e.n
 26. A file with 816 events opens without a visible delay.
 27. The page works from a plain file, with no network and no external resources.
 
+## The report
+
+Results go into `report.html` at the repository root — a standalone page, not a
+message. It is what people actually look at, so it has to read at a glance.
+
+- one section per group from the Definition of done, group heading large
+- one line per check: a mark, the number, the text
+- passed marks in `--ok`, failed in `--fail`, nothing else coloured
+- failures carry one short line saying what actually happened
+- a count at the top: how many passed out of how many
+- colours and type come from `styles.css`, no new ones
+- fills the viewport, no page scroll, no external resources
+
 ## How we verify
 
 ```
