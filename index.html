@@ -20,10 +20,10 @@
       --mono:      "SF Mono",Menlo,ui-monospace,monospace;
       --r:         14px;
     }
-    html,body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0;height:100vh;display:flex;flex-direction:column}
+    html,body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0;height:100vh;overflow:hidden}
     *{box-sizing:border-box}
-    .container{flex:1;display:flex;flex-direction:column;max-width:1200px;width:100%;margin:0 auto;padding:16px 24px 12px;min-height:0}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-shrink:0}
+    .container{height:100vh;display:flex;flex-direction:column;max-width:1200px;width:100%;margin:0 auto;padding:20px 24px 16px;overflow:hidden}
+    .header{display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
     .header h1{font-size:24px;font-weight:700;margin:0}
     .session-info{color:var(--muted);font-size:13px}
     .timeline{background:var(--surface);border-radius:var(--r);padding:16px 24px;position:relative;cursor:pointer;flex-shrink:0}
@@ -37,7 +37,7 @@
     .stats{display:flex;gap:48px;margin-top:16px;flex-shrink:0}
     .stats u{display:block;text-decoration:none;font-family:var(--mono);font-size:16px;letter-spacing:.14em;color:var(--muted)}
     .stats b{display:block;font-size:36px;font-weight:700;margin-top:2px}
-    .log{flex:1;margin-top:16px;border-top:1px solid var(--rule);padding-top:12px;font-family:var(--mono);font-size:16px;line-height:1.7;color:#54544E;overflow-y:auto;min-height:0}
+    .log{flex:1;min-height:0;margin-top:16px;border-top:1px solid var(--rule);padding-top:12px;font-family:var(--mono);font-size:16px;line-height:1.7;color:#54544E;overflow-y:auto}
     .log .tag{display:inline-block;width:7em}
     .log .tag.thinking{color:var(--think)}
     .log .tag.run,.log .tag.edit{color:var(--ok)}
