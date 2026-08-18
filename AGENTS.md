@@ -38,6 +38,13 @@ Light theme. Colours and type come from `styles.css`; do not invent new ones.
 The timeline is the main object on screen, so keep it large. The transcript is
 secondary: small and muted. Counters are large numerals, no cards or borders.
 
+## Running the checklist
+
+When the task is to run the checklist, this is an assessment, not a build.
+**Do not modify, rewrite, fix or add any file.** Do not touch `index.html`,
+tests, dependencies or configuration. Assess the code exactly as it is and put
+the results in `report.html`. That file is the only thing you may create.
+
 ## Definition of done
 
 Every item is verified against a **completed** session from `logs/session-4f1e.ndjson`
