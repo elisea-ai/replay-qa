@@ -45,6 +45,18 @@ When the task is to run the checklist, this is an assessment, not a build.
 tests, dependencies or configuration. Assess the code exactly as it is and put
 the results in `report.html`. That file is the only thing you may create.
 
+**Assume the page has defects and your job is to find them.** It was written in
+one pass and never reviewed. A clean report is far more likely to mean you did
+not look hard enough than that the code is correct.
+
+**Observe, do not infer.** A check may be marked as passed only if you actually
+opened the page and saw the behaviour. Reading the source and reasoning about
+what it should do is not enough and does not count. If you cannot observe an
+item, mark it as not verified and say why.
+
+**Every failure needs evidence:** the number, what you expected, what actually
+happened, and the measured value where there is one.
+
 ## Definition of done
 
 Every item is verified against a **completed** session from `logs/session-4f1e.ndjson`
