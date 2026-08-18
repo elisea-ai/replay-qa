@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Replay</title>
+  <style>
+    :root{
+      --bg:        #FAFAF7;
+      --surface:   #EFEFE8;
+      --track:     #DCDCD4;
+      --ink:       #101010;
+      --muted:     #8C8C84;
+      --rule:      #E2E2DA;
+      --accent:    #C6EF4E;
+      --think:     #8FB4E8;
+      --ok:        #5E8F1E;
+      --fail:      #C4442A;
+      --font:      "Inter","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+      --mono:      "SF Mono",Menlo,ui-monospace,monospace;
+      --r:         14px;
+      --gap:       24px;
+    }
+    html,body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0;min-height:100vh}
+    *{box-sizing:border-box}
+    .timeline{background:var(--surface);border-radius:var(--r);padding:28px 24px;position:relative;cursor:pointer}
+    .timeline .bar{display:flex;gap:5px;height:124px;align-items:stretch;position:relative}
+    .timeline .blk{border-radius:4px;background:var(--track);transition:background .12s;flex:1;min-width:2px}
+    .timeline .blk.played{background:var(--ink)}
+    .timeline .blk.now{background:var(--accent)}
+    .timeline .blk.think{background:var(--think)}
+    .timeline .head{position:absolute;top:0;bottom:0;width:6px;background:var(--ink);border-radius:3px;transform:translateX(-50%);pointer-events:none;z-index:10}
+    .timeline .head::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ink)}
+    .stats{display:flex;gap:60px;margin-top:34px}
+    .stats u{display:block;text-decoration:none;font-family:var(--mono);font-size:20px;letter-spacing:.14em;color:var(--muted)}
+    .stats b{display:block;font-size:46px;font-weight:700;margin-top:4px}
+    .log{margin-top:30px;border-top:1px solid var(--rule);padding-top:22px;font-family:var(--mono);font-size:21px;line-height:2.1;color:#54544E;max-height:400px;overflow-y:auto}
+    .log .tag{display:inline-block;width:9em}
+    .log .tag.thinking{color:var(--think)}
+    .log .tag.run,.log .tag.edit{color:var(--ok)}
+    .log .tag.error{color:var(--fail)}
+    .controls{display:flex;gap:16px;margin-top:24px;align-items:center}
+    .btn{background:var(--ink);color:var(--bg);border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;font-family:var(--font)}
+    .btn:hover{opacity:0.85}
+    .speed{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+    .speed input{width:80px}
+    .container{max-width:1200px;margin:0 auto;padding:40px 24px}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+    .header h1{font-size:28px;font-weight:700}
+    .session-info{color:var(--muted);font-size:14px}
+    .loading{text-align:center;padding:80px;color:var(--muted);font-size:18px}
+    .error{color:var(--fail);padding:20px;text-align:center}
+    .time-display{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Session Replay</h1>
+      <div class="session-info" id="sessionInfo">Loading...</div>
+    </div>
+    
+    <div id="player">
+      <div class="loading">Loading session...</div>
+    </div>
+    
+    <div class="controls" id="controls" style="display:none">
+      <button class="btn" id="playPauseBtn">Pause</button>
+      <button class="btn" id="restartBtn">Restart</button>
+      <div class="speed">
+        <label>Speed:</label>
+        <input type="range" id="speedSlider" min="0.5" max="20" step="0.5" value="1">
+        <span id="speedValue">1x</span>
+      </div>
+      <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
+    </div>
+  </div>
+
+  <script type="module">
+    function splitLines(raw) {
+      return raw.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+    }
+    
+    function tryParse(line) {
+      try {
+        const v = JSON.parse(line);
+        return v !== null && typeof v === "object" ? v : null;
+      } catch {
+        return null;
+      }
+    }
+    
+    function clock(ms) {
+      if (!Number.isFinite(ms) || ms < 0) return "0:00";
+      const total = Math.floor(ms / 1000);
+      const m = Math.floor(total / 60);
+      const s = total % 60;
+      return `${m}:${String(s).padStart(2, "0")}`;
+    }
+    
+    function tokens(n) {
+      if (!Number.isFinite(n) || n < 0) return "0";
+      if (n < 1000) return String(Math.floor(n));
+      return `${(n / 1000).toFixed(1)}k`;
+    }
+    
+    function cost(usd) {
+      if (!Number.isFinite(usd) || usd < 0) return "$0.00";
+      return `$${usd.toFixed(2)}`;
+    }
+    
+    class SessionParser {
+      constructor() {
+        this.events = [];
+        this.totalDuration = 0;
+        this.steps = [];
+        this.currentStep = 0;
+        this.totalTokens = 0;
+        this.totalCost = 0;
+        this.totalFiles = 0;
+        this.sessionInfo = null;
+      }
+      
+      normalizeEvent(raw) {
+        const isNew = 't' in raw && 'type' in raw;
+        const isOld = 'ts' in raw && 'kind' in raw;
+        if (!isNew && !isOld) return null;
+        
+        let timeMs;
+        let type;
+        
+        if (isNew) {
+          timeMs = Number(raw.t) || 0;
+          type = raw.type;
+        } else {
+          timeMs = (Number(raw.ts) || 0) * 1000;
+          type = raw.kind;
+        }
+        
+        return { id: raw.id, timeMs, type, data: raw };
+      }
+      
+      parse(ndjson) {
+        const lines = splitLines(ndjson);
+        const seenIds = new Set();
+        
+        for (const line of lines) {
+          const parsed = tryParse(line);
+          if (!parsed) continue;
+          if (parsed.id && seenIds.has(parsed.id)) continue;
+          if (parsed.id) seenIds.add(parsed.id);
+          
+          const event = this.normalizeEvent(parsed);
+          if (!event) continue;
+          
+          this.events.push(event);
+          this.updateStats(event);
+        }
+        
+        this.events.sort((a, b) => a.timeMs - b.timeMs);
+        if (this.events.length > 0) {
+          this.totalDuration = this.events[this.events.length - 1].timeMs;
+        }
+        return this.events;
+      }
+      
+      updateStats(event) {
+        const d = event.data;
+        if (event.type === 'session_start') {
+          this.sessionInfo = { agent: d.agent || 'unknown', repo: d.repo || 'unknown' };
+        }
+        if (event.type === 'step_start') {
+          this.currentStep = d.step || (this.steps.length + 1);
+          this.steps.push({ start: event.timeMs, end: null, step: this.currentStep });
+        }
+        if (event.type === 'step_end' && this.steps.length > 0) {
+          this.steps[this.steps.length - 1].end = event.timeMs;
+        }
+        if (typeof d.tokens === 'number') {
+          this.totalTokens = Math.max(this.totalTokens, d.tokens);
+        }
+        if (typeof d.cost === 'number') {
+          this.totalCost = Math.max(this.totalCost, d.cost);
+        }
+        if (event.type === 'edit') {
+          this.totalFiles++;
+        }
+      }
+      
+      getDuration() { return this.totalDuration; }
+      getSessionInfo() { return this.sessionInfo; }
+      getSteps() { return this.steps; }
+    }
+    
+    function formatEvent(event) {
+      const d = event.data;
+      const time = clock(event.timeMs);
+      
+      switch (event.type) {
+        case 'session_start': return `<span class="tag">${time}</span> Session started: ${d.agent} / ${d.repo}`;
+        case 'prompt': return `<span class="tag">${time}</span> <span class="prompt">${escapeHtml(d.text || '')}</span>`;
+        case 'thinking': return `<span class="tag">${time}</span> <span class="tag thinking">think:</span> ${escapeHtml(d.text || '')}`;
+        case 'delta': return `<span class="tag">${time}</span> <span class="delta">${escapeHtml(d.text || '')}</span>`;
+        case 'read_file': return `<span class="tag">${time}</span> <span class="tag edit">read:</span> ${escapeHtml(d.path || '')} (${d.lines || 0} lines)`;
+        case 'edit': return `<span class="tag">${time}</span> <span class="tag edit">edit:</span> ${escapeHtml(d.path || '')} (+${d.added || 0}/-${d.removed || 0})`;
+        case 'run': return `<span class="tag">${time}</span> <span class="tag run">run:</span> ${escapeHtml(d.cmd || '')}`;
+        case 'run_result': return `<span class="tag">${time}</span> <span class="tag ${d.exit === 0 ? 'ok' : 'error'}">exit ${d.exit}:</span> ${escapeHtml(d.cmd || '')} [${tokens(d.tokens || 0)} tokens]`;
+        case 'commit': return `<span class="tag">${time}</span> <span class="tag edit">commit:</span> ${d.sha || ''} - ${escapeHtml(d.message || '')} (${d.files || 0} files)`;
+        case 'pull_request': return `<span class="tag">${time}</span> <span class="tag edit">PR #${d.number}:</span> ${escapeHtml(d.title || '')}`;
+        case 'step_start': return `<span class="tag">${time}</span> ── Step ${d.step} started ──`;
+        case 'step_end': return `<span class="tag">${time}</span> ── Step ${d.step} ended ──`;
+        case 'session_end': return `<span class="tag">${time}</span> Session ended (${d.steps || 0} steps, ${clock(d.duration_ms || 0)})`;
+        default: return `<span class="tag">${time}</span> ${event.type}`;
+      }
+    }
+    
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    
+    class ReplayPlayer {
+      constructor() {
+        this.events = [];
+        this.steps = [];
+        this.duration = 0;
+        this.currentIndex = 0;
+        this.isPlaying = false;
+        this.speed = 1;
+        this.currentTime = 0;
+        this.stats = { steps: 0, files: 0, tokens: 0, cost: 0 };
+        this.initUI();
+      }
+      
+      initUI() {
+        this.container = document.getElementById('player');
+        this.controls = document.getElementById('controls');
+        this.playPauseBtn = document.getElementById('playPauseBtn');
+        this.restartBtn = document.getElementById('restartBtn');
+        this.speedSlider = document.getElementById('speedSlider');
+        this.speedValue = document.getElementById('speedValue');
+        this.timeDisplay = document.getElementById('timeDisplay');
+        this.sessionInfo = document.getElementById('sessionInfo');
+        
+        this.playPauseBtn.addEventListener('click', () => this.togglePlay());
+        this.restartBtn.addEventListener('click', () => this.restart());
+        this.speedSlider.addEventListener('input', (e) => {
+          this.speed = parseFloat(e.target.value);
+          this.speedValue.textContent = `${this.speed}x`;
+        });
+      }
+      
+      load(ndjson) {
+        const parser = new SessionParser();
+        this.events = parser.parse(ndjson);
+        this.steps = parser.getSteps();
+        this.duration = parser.getDuration();
+        this.sessionInfo.textContent = parser.getSessionInfo() ? `${parser.getSessionInfo().agent} / ${parser.getSessionInfo().repo}` : 'Session loaded';
+        
+        if (this.events.length === 0) {
+          this.container.innerHTML = '<div class="error">No valid events found</div>';
+          return;
+        }
+        
+        this.render();
+        this.controls.style.display = 'flex';
+        this.play();
+      }
+      
+      render() {
+        this.container.innerHTML = `
+          <div class="timeline" id="timeline">
+            <div class="bar" id="bar"></div>
+            <div class="head" id="playhead"></div>
+          </div>
+          <div class="stats">
+            <div><u>STEP</u><b id="stepCount">0</b></div>
+            <div><u>FILES</u><b id="fileCount">0</b></div>
+            <div><u>TOKENS</u><b id="tokenCount">0</b></div>
+            <div><u>COST</u><b id="costCount">$0.00</b></div>
+          </div>
+          <div class="log" id="log"></div>
+        `;
+        
+        this.timeline = document.getElementById('timeline');
+        this.bar = document.getElementById('bar');
+        this.playhead = document.getElementById('playhead');
+        this.log = document.getElementById('log');
+        this.stepCountEl = document.getElementById('stepCount');
+        this.fileCountEl = document.getElementById('fileCount');
+        this.tokenCountEl = document.getElementById('tokenCount');
+        this.costCountEl = document.getElementById('costCount');
+        
+        this.renderTimelineBlocks();
+        
+        this.timeline.addEventListener('click', (e) => {
+          const rect = this.bar.getBoundingClientRect();
+          const percent = (e.clientX - rect.left) / rect.width;
+          this.seekToTime(percent * this.duration);
+        });
+      }
+      
+      renderTimelineBlocks() {
+        this.bar.innerHTML = '';
+        const stepDurations = this.steps.map(s => ({ start: s.start, end: s.end || this.duration, step: s.step }));
+        
+        for (const step of stepDurations) {
+          const startPct = (step.start / this.duration) * 100;
+          const widthPct = Math.max(((step.end - step.start) / this.duration) * 100, 0.1);
+          
+          const blk = document.createElement('div');
+          blk.className = 'blk';
+          blk.style.position = 'absolute';
+          blk.style.left = `${startPct}%`;
+          blk.style.width = `${widthPct}%`;
+          blk.dataset.step = step.step;
+          this.bar.appendChild(blk);
+        }
+      }
+      
+      updatePlayhead(timeMs) {
+        const percent = Math.min((timeMs / this.duration) * 100, 100);
+        this.playhead.style.left = `${percent}%`;
+        
+        const blocks = this.bar.querySelectorAll('.blk');
+        blocks.forEach(blk => {
+          const stepStart = (parseFloat(blk.style.left) / 100) * this.duration;
+          if (timeMs >= stepStart) blk.classList.add('played');
+          else blk.classList.remove('played');
+        });
+      }
+      
+      updateStats(event) {
+        const d = event.data;
+        if (event.type === 'step_start') { this.stats.steps = d.step || this.stats.steps; this.stepCountEl.textContent = this.stats.steps; }
+        if (event.type === 'edit') { this.stats.files++; this.fileCountEl.textContent = this.stats.files; }
+        if (typeof d.tokens === 'number' && d.tokens > this.stats.tokens) { this.stats.tokens = d.tokens; this.tokenCountEl.textContent = tokens(this.stats.tokens); }
+        if (typeof d.cost === 'number' && d.cost > this.stats.cost) { this.stats.cost = d.cost; this.costCountEl.textContent = cost(this.stats.cost); }
+      }
+      
+      addLogEntry(event) {
+        const entry = document.createElement('div');
+        entry.innerHTML = formatEvent(event);
+        this.log.appendChild(entry);
+        this.log.scrollTop = this.log.scrollHeight;
+      }
+      
+      seekToTime(timeMs) {
+        let targetIndex = 0;
+        for (let i = 0; i < this.events.length; i++) {
+          if (this.events[i].timeMs <= timeMs) targetIndex = i + 1;
+          else break;
+        }
+        this.currentIndex = targetIndex;
+        this.stats = { steps: 0, files: 0, tokens: 0, cost: 0 };
+        this.log.innerHTML = '';
+        this.stepCountEl.textContent = '0';
+        this.fileCountEl.textContent = '0';
+        this.tokenCountEl.textContent = '0';
+        this.costCountEl.textContent = '$0.00';
+        
+        for (let i = 0; i < this.currentIndex; i++) {
+          this.updateStats(this.events[i]);
+          if (i >= this.currentIndex - 50) this.addLogEntry(this.events[i]);
+        }
+        
+        this.updatePlayhead(timeMs);
+        this.updateTimeDisplay(timeMs);
+      }
+      
+      updateTimeDisplay(timeMs) {
+        this.timeDisplay.textContent = `${clock(timeMs)} / ${clock(this.duration)}`;
+      }
+      
+      togglePlay() { this.isPlaying ? this.pause() : this.play(); }
+      
+      play() {
+        if (this.currentIndex >= this.events.length) this.restart();
+        this.isPlaying = true;
+        this.playPauseBtn.textContent = 'Pause';
+        this.lastTickTime = performance.now();
+        this.tick();
+      }
+      
+      pause() {
+        this.isPlaying = false;
+        this.playPauseBtn.textContent = 'Play';
+        if (this.playbackTimer) { cancelAnimationFrame(this.playbackTimer); this.playbackTimer = null; }
+      }
+      
+      restart() {
+        this.pause();
+        this.currentIndex = 0;
+        this.stats = { steps: 0, files: 0, tokens: 0, cost: 0 };
+        this.log.innerHTML = '';
+        this.stepCountEl.textContent = '0';
+        this.fileCountEl.textContent = '0';
+        this.tokenCountEl.textContent = '0';
+        this.costCountEl.textContent = '$0.00';
+        this.updatePlayhead(0);
+        this.updateTimeDisplay(0);
+        if (this.events.length > 0) { this.addLogEntry(this.events[0]); this.updateStats(this.events[0]); }
+      }
+      
+      tick() {
+        if (!this.isPlaying) return;
+        const now = performance.now();
+        const elapsed = (now - this.lastTickTime) * this.speed;
+        this.lastTickTime = now;
+        
+        while (this.currentIndex < this.events.length) {
+          const event = this.events[this.currentIndex];
+          if (event.timeMs <= this.currentTime + elapsed) {
+            this.currentTime = event.timeMs;
+            this.updateStats(event);
+            this.addLogEntry(event);
+            this.currentIndex++;
+          } else {
+            this.currentTime += elapsed;
+            break;
+          }
+        }
+        
+        if (this.currentIndex >= this.events.length) { this.currentTime = this.duration; this.pause(); }
+        
+        this.updatePlayhead(this.currentTime);
+        this.updateTimeDisplay(this.currentTime);
+        
+        if (this.isPlaying) this.playbackTimer = requestAnimationFrame(() => this.tick());
+      }
+    }
+    
+    const player = new ReplayPlayer();
+    
+    async function loadSession() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionFile = params.get('session') || 'logs/session-4f1e.ndjson';
+      
+      try {
+        const response = await fetch(sessionFile);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const ndjson = await response.text();
+        player.load(ndjson);
+      } catch (err) {
+        document.getElementById('player').innerHTML = `<div class="error">Failed to load session: ${err.message}<br><br>Usage: index.html?session=logs/session-4f1e.ndjson</div>`;
+      }
+    }
+    
+    loadSession();
+  </script>
+</body>
+</html>
