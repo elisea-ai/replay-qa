@@ -38,6 +38,15 @@ Light theme. Colours and type come from `styles.css`; do not invent new ones.
 The timeline is the main object on screen, so keep it large. The transcript is
 secondary: small and muted. Counters are large numerals, no cards or borders.
 
+## Before you start
+
+If a copy of this repository already exists in the workspace, **delete it and
+clone again**. A stale copy from an earlier session will not match what is on
+`main` and every result you produce from it will be wrong.
+
+A **bug hunt** means: run the Definition of done below against the existing
+`index.html`, change nothing, and write `report.html` with the results.
+
 ## Running the checklist
 
 When the task is to run the checklist, this is an assessment, not a build.
