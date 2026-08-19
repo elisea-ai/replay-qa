@@ -120,16 +120,33 @@ Every item is verified against a **completed** session from `logs/session-4f1e.n
 
 ## The report
 
-Results go into `report.html` at the repository root — a standalone page, not a
-message. It is what people actually look at, so it has to read at a glance.
+Results go into `report.html` at the repository root. It is a page people open
+and look at, not a document they read. Someone who knows nothing about this
+project must understand in three seconds whether the code is healthy.
 
-- one section per group from the Definition of done, group heading large
-- one line per check: a mark, the number, the text
-- passed marks in `--ok`, failed in `--fail`, nothing else coloured
-- failures carry one short line saying what actually happened
-- a count at the top: how many passed out of how many
-- colours and type come from `styles.css`, no new ones
-- fills the viewport, no page scroll, no external resources
+**Make it visual.**
+
+- the score first and huge: how many of the 27 passed, as the largest thing on the page
+- one row per group with a bar showing the proportion passed, not just a number
+- passed in `--ok`, failed in `--fail`, nothing else coloured
+- **every failure carries a screenshot of the defect**, taken during verification
+  and embedded inline as a `data:image/png;base64` URI, with a one-line caption
+  saying what is wrong in the picture
+- under each screenshot: what was expected, what happened, and the measured value
+- no external resources of any kind: no CDN, no fonts, no linked images
+- colours and type from `styles.css`, no new ones
+
+A wall of text is a failed report even if every fact in it is correct.
+
+## Publishing
+
+When the report is finished, commit `report.html` to `main` **using your GitHub
+connector operations, not git** — there is no git credential in this
+environment. Then reply with the link where it can be opened:
+
+```
+https://elisea-ai.github.io/replay-qa/report.html
+```
 
 ## How we verify
 
