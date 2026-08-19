@@ -138,31 +138,19 @@ project must understand in three seconds whether the code is healthy.
 
 A wall of text is a failed report even if every fact in it is correct.
 
-## The summary image
-
-Besides the page, produce `report.png` — a single 1920×1080 image, captured from
-a headless browser, that carries the result on its own. It gets looked at in a
-feed on a phone, so it holds very little:
-
-- the score, huge: the largest thing in the frame by a wide margin, readable when
-  the image is 400px wide
-- one row per group with a bar and its own score, nothing else
-- how many failed, in `--fail`
-- no lists of individual checks, no notes, no screenshots — those live in the page
-
-If a person cannot read the score with the image scaled to a phone, the image is
-wrong. Make the number bigger and remove something.
-
 ## Publishing
 
-When both files are finished, commit `report.html` and `report.png` to `main`
-**using your GitHub connector operations, not git** — there is no git credential
-in this environment. Then reply with both links:
+When the report is finished, commit `report.html` to `main` **using your GitHub
+connector operations, not git** — there is no git credential in this environment.
+
+Then reply with one line and nothing else: the link where it opens.
 
 ```
-https://elisea-ai.github.io/replay-qa/report.png
 https://elisea-ai.github.io/replay-qa/report.html
 ```
+
+No summary in the chat, no list of findings, no explanation. The link is the
+answer. Everything worth saying is on the page.
 
 ## How we verify
 
